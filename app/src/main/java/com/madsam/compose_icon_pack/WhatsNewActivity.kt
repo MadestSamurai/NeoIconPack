@@ -14,68 +14,135 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack;
+package com.madsam.compose_icon_pack
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.madsam.compose_icon_pack.bean.IconBean
+import com.madsam.compose_icon_pack.screens.IconGridScreen
+import com.madsam.compose_icon_pack.ui.theme.ComposeIconPackTheme
+import com.madsam.compose_icon_pack.util.LatestIconsGetter
+import com.madsam.compose_icon_pack.util.PkgUtil
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-import com.madsam.compose_icon_pack.fragment.IconsFragment;
-import com.madsam.compose_icon_pack.util.LatestIconsGetter;
-import com.madsam.compose_icon_pack.util.PkgUtil;
+class WhatsNewActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-/**
- * Created by By_syk on 2017-01-30.
- */
+        val gridItemMode = resources.getInteger(R.integer.whats_new_grid_item_mode)
 
-public class WhatsNewActivity extends AppCompatActivity implements IconsFragment.OnLoadDoneListener {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whats_new);
-
-        init();
-    }
-
-    private void init() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        IconsFragment fragment = IconsFragment.newInstance(0, new LatestIconsGetter(),
-                getResources().getInteger(R.integer.whats_new_grid_item_mode));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_content, fragment)
-                .commit();
-    }
-
-    private void showHint() {
-        Snackbar.make(findViewById(R.id.coordinator_layout),
-                PkgUtil.getAppVer(this, getString(R.string.toast_whats_new)),
-                Snackbar.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onLoadDone(int pageId, int sum) {
-        (new Handler()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showHint();
+        setContent {
+            ComposeIconPackTheme {
+                WhatsNewScreen(
+                    gridItemMode = gridItemMode,
+                    onBackPressed = { finish() }
+                )
             }
-        }, 400);
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WhatsNewScreen(
+    gridItemMode: Int,
+    onBackPressed: () -> Unit
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    var icons by remember { mutableStateOf<List<IconBean>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+
+    // 加载最新图标
+    LaunchedEffect(true) {
+        try {
+            LatestIconsGetter().getIcons(context)?.let { iconList ->
+                icons = iconList
+            }
+        } finally {
+            isLoading = false
+
+            // 延迟显示提示
+            delay(400)
+            val message = PkgUtil.getAppVer(context, context.getString(R.string.toast_whats_new))
+            snackbarHostState.showSnackbar(message)
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "新增") },
+                navigationIcon = {
+                    IconButton(onClick = onBackPressed) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "返回"
+                        )
+                    }
+                }
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(16.dp)
+            ) { snackbarData ->
+                Snackbar(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    snackbarData = snackbarData
+                )
+            }
         }
-        return super.onOptionsItemSelected(item);
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            // 最新图标网格
+            IconGridScreen(
+                icons = icons,
+                isLoading = isLoading,
+                gridItemMode = gridItemMode,
+                paddingValues = paddingValues,
+                onItemClick = { icon ->
+                    // 显示图标详情
+                    coroutineScope.launch {
+                        snackbarHostState.showSnackbar("已选择: ${icon.label ?: icon.name}")
+                    }
+                }
+            )
+        }
     }
 }
