@@ -1,0 +1,66 @@
+[versions]
+# Kotlin & Gradle
+icons-extended = "1.7.8"
+kotlin = "2.0.10"
+agp = "8.10.1"
+
+# Core Android
+activity-compose = "1.10.1"
+appcompat = "1.7.1"
+compose-bom = "2025.06.00"
+compose-compiler = "1.5.15"
+constraintlayout = "2.2.1"
+datastore = "1.1.7"
+lifecycle = "2.9.1"
+material = "1.12.0"
+navigation = "2.9.0"
+preference = "1.2.1"
+recyclerview = "1.4.0"
+
+# 第三方库
+coil = "2.7.0"
+fastscroll = "1.0.16"
+glide = "4.15.1"
+material-tap-target = "3.3.2"
+retrofit = "2.11.0"
+
+# 测试
+junit = "4.13.2"
+
+[libraries]
+# Kotlin & Gradle
+icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "icons-extended" }
+kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+# Core Android
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "compose-compiler" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
+compose-ui = { module = "androidx.compose.ui:ui" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+preference = { module = "androidx.preference:preference", version.ref = "preference" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+
+# 第三方库
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+fastscroll = { module = "com.simplecityapps:recyclerview-fastscroll", version.ref = "fastscroll" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+material-tap-target = { module = "uk.co.samuelwall:material-tap-target-prompt", version.ref = "material-tap-target" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+# 测试
+junit = { module = "junit:junit", version.ref = "junit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
