@@ -26,7 +26,7 @@ import java.util.regex.Pattern
 /**
  * Created by By_syk on 2017-03-04.
  */
-class AppfilterReader private constructor(resources: Resources) {
+class AppFilterReader private constructor(resources: Resources) {
     val dataList: MutableList<Bean> = ArrayList()
 
     init {
@@ -85,15 +85,15 @@ class AppfilterReader private constructor(resources: Resources) {
     }
 
     companion object {
-        private var instance: AppfilterReader? = null
+        private var instance: AppFilterReader? = null
         private val componentPattern = Pattern.compile("ComponentInfo\\{([^/]+?)/(.+?)\\}")
 
         @JvmStatic
-        fun getInstance(resources: Resources): AppfilterReader {
+        fun getInstance(resources: Resources): AppFilterReader {
             if (instance == null) {
-                synchronized(AppfilterReader::class.java) {
+                synchronized(AppFilterReader::class.java) {
                     if (instance == null) {
-                        instance = AppfilterReader(resources)
+                        instance = AppFilterReader(resources)
                     }
                 }
             }

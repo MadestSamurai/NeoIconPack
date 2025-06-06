@@ -135,8 +135,7 @@ fun MainScreen(
             NavHost(navController, startDestination = "matched") {
                 composable("lost") {
                     LostIconsScreen(
-                        onIconCountUpdated = { count -> lostIconsCount = count },
-                        onDoubleClick = if (showStatsModule) onStatsRequest else null
+                        onIconCountUpdated = { count -> lostIconsCount = count }
                     )
                 }
                 composable("matched") {

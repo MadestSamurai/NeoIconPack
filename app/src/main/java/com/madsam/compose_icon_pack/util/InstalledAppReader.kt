@@ -41,7 +41,7 @@ class InstalledAppReader private constructor(packageManager: PackageManager) {
     }
 
     fun getComponentLabelMap(): Map<String, String> {
-        return dataList.associate { "${it.pkg}/${it.launcher}" to (it.label ?: "") }
+        return dataList.associate { "${it.pkg}/${it.launcher}" to it.label }
     }
 
     fun getLabel(component: String): String? {
@@ -54,7 +54,7 @@ class InstalledAppReader private constructor(packageManager: PackageManager) {
     }
 
     inner class Bean(
-        val label: String?,
+        val label: String,
         val pkg: String,
         val launcher: String
     )

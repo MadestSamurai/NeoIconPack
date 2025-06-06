@@ -62,7 +62,7 @@ abstract class IconsGetter : Serializable {
             }
 
             // With components
-            val appfilterBeanList = AppfilterReader
+            val appfilterBeanList = AppFilterReader
                 .getInstance(resources).dataList
 
             for (iconBean in dataList) {

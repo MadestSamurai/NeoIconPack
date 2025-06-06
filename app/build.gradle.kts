@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
     debugImplementation(libs.compose.ui.tooling)
+    implementation(libs.icons.extended)
 
     // Android官方库
     implementation(libs.material)
