@@ -16,7 +16,18 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.by_syk.nanoiconpack.sample">
+    package="com.madsam.compose_icon_pack">
+
+    <!-- 从nanoiconpack模块合并的权限 -->
+    <!-- for saving icons -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- for sending icon to home screen -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+
+    <!-- for requesting redrawing -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--
     for android:theme=""
@@ -31,7 +42,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppThemeLightWithDark">
 
-        <activity android:name="com.by_syk.lib.nanoiconpack.MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -56,11 +69,46 @@
                 <action android:name="com.sonymobile.home.ICON_PACK" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <!-- Other launchers:
-                 Smart recognizes Apex's or ADW's
-                 Action 3 recognizes ADW's
-                 and more... -->
         </activity>
+
+        <!-- 从nanoiconpack模块合并的Activity -->
+        <activity
+            android:name=".IconPickActivity"
+            android:exported="true">
+            <!-- For Nova -->
+            <intent-filter>
+                <action android:name="com.novalauncher.THEME" />
+                <category android:name="com.novalauncher.category.CUSTOM_ICON_PICKER" />
+            </intent-filter>
+            <!-- For ADW -->
+            <intent-filter>
+                <action android:name="org.adw.launcher.icons.ACTION_PICK_ICON" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".WhatsNewActivity"
+            android:exported="false"
+            android:label="@string/activity_whats_new" />
+
+        <activity
+            android:name=".SearchActivity"
+            android:exported="false"
+            android:label="@string/activity_search" />
+
+        <activity
+            android:name=".AboutActivity"
+            android:exported="false"
+            android:label="@string/activity_about" />
+
+        <activity
+            android:name=".ReqStatsActivity"
+            android:exported="false"
+            android:label="@string/activity_req_stats"
+            android:theme="@style/AppThemeDarkConsole"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="intoExisting" />
 
     </application>
 

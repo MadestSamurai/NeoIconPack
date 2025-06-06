@@ -20,40 +20,7 @@
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
     <!-- Just KEEP IT EMPTY BUT DO NOT DELETE IT if you do not want to collect app name list. -->
     <string-array name="icon_labels">
-        <!-- A -->
-        <!-- B -->
-        <!-- C -->
-        <item>日历</item>
-        <!-- D -->
-        <!-- E -->
-        <!-- F -->
-        <!-- G -->
-        <!-- H -->
-        <!-- I -->
-        <!-- J -->
-        <!-- K -->
-        <!-- L -->
-        <!-- M -->
-        <!-- N -->
-        <item>NanoIconPack (by @Childish)</item>
-        <item>NanoIconPack (by @Markuss)</item>
-        <item>NanoIconPack (by @pandecheng)</item>
-        <item>NanoIconPack (by @atony)</item>
-        <item>NanoIconPack (by @可以and不行)</item>
-        <item>NanoIconPack (by @ArchieLiu)</item>
-        <item>NanoIconPack (by @lnm011223)</item>
-        <!-- O -->
-        <!-- P -->
-        <!-- Q -->
-        <!-- R -->
-        <!-- S -->
-        <!-- T -->
-        <!-- U -->
-        <!-- V -->
-        <!-- W -->
-        <!-- X -->
-        <!-- Y -->
-        <!-- Z -->
+        <!--<item>日历</item>-->
     </string-array>
 
 </resources>

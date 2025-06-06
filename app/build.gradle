@@ -1,16 +1,16 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion Integer.parseInt(project.COMPILE_SDK_VERSION)
-    buildToolsVersion project.BUILD_TOOLS_VERSION
+    namespace "com.madsam.compose_icon_pack"
+    compileSdk Integer.parseInt(project.COMPILE_SDK_VERSION)
 
     defaultConfig {
-        // Package name format: com.[your_name].iconpack.[name_of_your_icon_pack]
-        applicationId "com.by_syk.nanoiconpack.sample"
-        minSdkVersion Integer.parseInt(project.MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(project.TARGET_SDK_VERSION)
+        applicationId "com.madsam.compose_icon_pack"
+        minSdk Integer.parseInt(project.MIN_SDK_VERSION)
+        targetSdk Integer.parseInt(project.TARGET_SDK_VERSION)
         versionCode 17103000
-        // Version name format: [version].[num_of_icons]
         versionName "3.3.0.8.nightly"
 
         resConfigs "en", "zh_cn"
@@ -18,36 +18,77 @@ android {
 
     buildTypes {
         release {
-            shrinkResources false // Keep false, or icons in /drawable-nodpi/ will become black.
+            shrinkResources false
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-            // For formatting apk file name, like com.by_syk.template_v1.0.0(17012500).apk
-            android.applicationVariants.all { variant ->
-                variant.outputs.all { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null) {
-                        def fileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}(${defaultConfig.versionCode}).apk"
-                        outputFileName = fileName
-                    }
-                }
-            }
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    lintOptions {
+    // 使用新的 APK 命名方式
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}(${defaultConfig.versionCode}).apk"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
         disable 'MissingTranslation'
     }
 }
 
-/*repositories {
-    flatDir { dirs 'libs' }
-}*/
+// AAR依赖仓库配置
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
+    // 本地AAR库
+    implementation(name: 'aboutmsgrender-1.0.6', ext: 'aar')
+    implementation(name: 'icongridview-1.0.6', ext: 'aar')
 
-    compile project(':nanoiconpack')
+    // Android官方库
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // 第三方库
+    implementation 'com.github.by-syk:TextTag:1.1.0'
+    implementation 'com.github.by-syk:GlobalToast:1.2.2'
+    implementation 'com.github.by-syk:SP:1.0.9'
+
+    // 快速滚动条
+    implementation 'com.simplecityapps:recyclerview-fastscroll:1.0.16'
+
+    // 二维码生成
+    implementation 'com.github.kenglxn.QRGen:android:2.3.0'
+
+    // 网络请求框架
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    // 图片加载
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+
+    // 新手引导提示
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.3.2'
+
+    // 加载动画
+    implementation 'com.wang.avi:library:2.1.3'
+
+    // 拼音处理
+    implementation 'com.github.promeg:tinypinyin:2.0.3'
+
+    // 测试依赖
+    testImplementation 'junit:junit:4.13.2'
 }
