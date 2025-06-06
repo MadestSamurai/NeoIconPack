@@ -22,6 +22,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
@@ -37,6 +38,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.util.Locale
 import java.util.UUID
 import java.util.regex.Pattern
 
@@ -56,7 +58,7 @@ object ExtraUtil {
         if (TextUtils.isEmpty(text)) {
             return arrayOf("")
         }
-        return arrayOf(text!!.toLowerCase())
+        return arrayOf(text!!.toLowerCase(Locale.ROOT))
     }
 
     /**
@@ -68,7 +70,19 @@ object ExtraUtil {
         }
 
         return Array(textArr.size) { i ->
-            textArr[i].toLowerCase()
+            textArr[i].toLowerCase(Locale.ROOT)
+        }
+    }
+
+    /**
+     * 获取应用版本号（versionCode）
+     */
+    fun getAppVersionCode(context: Context): Long {
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            packageInfo.longVersionCode
+        } catch (e: PackageManager.NameNotFoundException) {
+            0L
         }
     }
 
@@ -78,7 +92,6 @@ object ExtraUtil {
      * @param context
      * @param text
      */
-    @TargetApi(11)
     fun copy2Clipboard(context: Context?, text: String?) {
         if (context == null || text == null) {
             return

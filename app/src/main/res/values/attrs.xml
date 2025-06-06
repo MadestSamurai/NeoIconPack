@@ -33,4 +33,13 @@
     <attr name="icon_grid_color" format="color" />
     <attr name="bottom_bar_color" format="color" />
 
+    <attr name="igColor" format="color|reference" />
+    <attr name="igDash" format="boolean" />
+    <attr name="igStyle" format="enum">
+        <enum name="frame" value="0" />
+        <enum name="cross" value="1" />
+        <enum name="unionJack" value="2" />
+        <enum name="materialLite" value="3" />
+        <enum name="materialFull" value="4" />
+    </attr>
 </resources>

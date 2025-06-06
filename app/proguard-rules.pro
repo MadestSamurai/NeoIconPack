@@ -2,7 +2,7 @@
 # By default, the flags in this file are appended to flags specified
 # in D:\Android\sdk/tools/proguard/proguard-android.txt
 # You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
+# directive in build.gradle.kts.
 #
 # For more details, see
 #   http://developer.android.com/guide/developing/tools/proguard.html
@@ -15,12 +15,6 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
-
-# for official SearchView
--keep class android.support.v7.widget.SearchView { *; }
-
-# for pinyin4j
--keep class net.sourceforge.pinyin4j.** { *; }
 
 # for OkHttp
 # -dontwarn okhttp3.**
@@ -49,7 +43,3 @@
 # for RecycleView-FastScroll
 # Fix: Scroll thumbnail is not hiding in release builds with obfuscation
 -keep class com.simplecityapps.recyclerview_fastscroll.views.FastScrollPopup { *; }
-
-# for AVLoadingIndicatorView
--keep class com.wang.avi.** { *; }
--keep class com.wang.avi.indicators.** { *; }

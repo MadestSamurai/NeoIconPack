@@ -24,7 +24,7 @@ import java.io.Serializable
 class LatestIconsGetter : IconsGetter(), Serializable {
 
     @Throws(Exception::class)
-    override fun getIcons(context: Context): List<IconBean> {
+    override fun getIcons(context: Context): MutableList<IconBean> {
         val dataList = getAllIcons(context)
         filterNotNew(context, dataList)
         return dataList

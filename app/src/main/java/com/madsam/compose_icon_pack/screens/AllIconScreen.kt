@@ -1,5 +1,6 @@
 package com.madsam.compose_icon_pack.screens
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -52,19 +53,23 @@ fun AllIconsScreen(
     var icons by remember { mutableStateOf<List<IconModel>>(emptyList()) }
 
     LaunchedEffect(true) {
-        // 从IconBean转换为IconModel
-        AllIconsGetter().getIcons(context).let { iconBeans ->
-            // 将IconBean转换为IconModel
+        try {
+            val iconBeans = AllIconsGetter().getIcons(context)
+            Log.d("AllIconsScreen", "获取到图标数量: ${iconBeans.size}")
+
             val iconModels = iconBeans.map { bean ->
                 IconModel(
                     iconId = bean.iconId,
                     label = bean.label ?: "",
                     fullResName = bean.name,
-                    packageName = bean.components.firstOrNull()?.pkg ?: "" // 使用第一个组件的包名
+                    packageName = bean.components.firstOrNull()?.pkg ?: ""
                 )
             }
             icons = iconModels
             onIconCountUpdated(iconModels.size)
+            Log.d("AllIconsScreen", "转换后图标数量: ${icons.size}")
+        } catch (e: Exception) {
+            Log.e("AllIconsScreen", "加载图标时出错", e)
         }
     }
 

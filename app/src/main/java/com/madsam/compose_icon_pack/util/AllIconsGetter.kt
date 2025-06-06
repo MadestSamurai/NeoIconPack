@@ -24,7 +24,7 @@ import java.io.Serializable
  */
 class AllIconsGetter : IconsGetter(), Serializable {
     @Throws(Exception::class)
-    override fun getIcons(context: Context?): MutableList<IconBean> {
+    override fun getIcons(context: Context): MutableList<IconBean> {
         return getAllIcons(context)
     }
 }

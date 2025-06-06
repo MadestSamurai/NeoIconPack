@@ -28,7 +28,7 @@ import java.util.regex.Pattern
 abstract class IconsGetter : Serializable {
 
     @Throws(Exception::class)
-    abstract fun getIcons(context: Context): List<IconBean>
+    abstract fun getIcons(context: Context): MutableList<IconBean>
 
     @Throws(Exception::class)
     protected fun getAllIcons(context: Context): MutableList<IconBean> {
