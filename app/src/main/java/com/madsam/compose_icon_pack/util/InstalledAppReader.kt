@@ -1,120 +1,77 @@
-package com.madsam.compose_icon_pack.util;
+package com.madsam.compose_icon_pack.util
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import android.content.Intent
+import android.content.pm.PackageManager
 
 /**
  * Created by By_syk on 2017-07-06.
  */
+class InstalledAppReader private constructor(packageManager: PackageManager) {
+    private val dataList: MutableList<Bean> = ArrayList()
 
-public class InstalledAppReader {
-    private static InstalledAppReader instance;
-
-    @NonNull
-    private List<Bean> dataList = new ArrayList<>();
-
-    private InstalledAppReader(@NonNull PackageManager packageManager) {
-        init(packageManager);
+    init {
+        init(packageManager)
     }
 
-    private void init(@NonNull PackageManager packageManager) {
+    private fun init(packageManager: PackageManager) {
         try {
-            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            List<ResolveInfo> list = packageManager.queryIntentActivities(mainIntent, 0);
-            for (ResolveInfo resolveInfo : list) {
-                dataList.add(new Bean(resolveInfo.loadLabel(packageManager).toString(),
+            val mainIntent = Intent(Intent.ACTION_MAIN, null)
+            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+            val list = packageManager.queryIntentActivities(mainIntent, 0)
+            for (resolveInfo in list) {
+                dataList.add(
+                    Bean(
+                        resolveInfo.loadLabel(packageManager).toString(),
                         resolveInfo.activityInfo.packageName,
-                        resolveInfo.activityInfo.name));
+                        resolveInfo.activityInfo.name
+                    )
+                )
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
-    @NonNull
-    public List<Bean> getDataList() {
-        return dataList;
+    fun getDataList(): List<Bean> {
+        return dataList
     }
 
-    @NonNull
-    public Set<String> getComponentSet() {
-        Set<String> set = new HashSet<>(dataList.size());
-        for (Bean bean : dataList) {
-            set.add(bean.getPkg() + "/" + bean.getLauncher());
-        }
-        return set;
+    fun getComponentSet(): Set<String> {
+        return dataList.map { "${it.pkg}/${it.launcher}" }.toSet()
     }
 
-    @NonNull
-    public Map<String, String> getComponentLabelMap() {
-        Map<String, String> map = new HashMap<>(dataList.size());
-        for (Bean bean : dataList) {
-            map.put(bean.getPkg() + "/" + bean.getLauncher(), bean.getLabel());
-        }
-        return map;
+    fun getComponentLabelMap(): Map<String, String> {
+        return dataList.associate { "${it.pkg}/${it.launcher}" to (it.label ?: "") }
     }
 
-    @Nullable
-    public String getLabel(@NonNull String component) {
-        for (Bean bean : dataList) {
-            if (component.equals(bean.getPkg() + "/" + bean.getLauncher())) {
-                return bean.getLabel();
+    fun getLabel(component: String): String? {
+        for (bean in dataList) {
+            if (component == "${bean.pkg}/${bean.launcher}") {
+                return bean.label
             }
         }
-        return null;
+        return null
     }
 
-    public static InstalledAppReader getInstance(@NonNull PackageManager packageManager) {
-        if (instance == null) {
-            synchronized (InstalledAppReader.class) {
-                if (instance == null) {
-                    instance = new InstalledAppReader(packageManager);
+    inner class Bean(
+        val label: String?,
+        val pkg: String,
+        val launcher: String
+    )
+
+    companion object {
+        private var instance: InstalledAppReader? = null
+
+        @JvmStatic
+        fun getInstance(packageManager: PackageManager): InstalledAppReader {
+            if (instance == null) {
+                synchronized(InstalledAppReader::class.java) {
+                    if (instance == null) {
+                        instance = InstalledAppReader(packageManager)
+                    }
                 }
             }
-        }
-        return instance;
-    }
-
-    public class Bean {
-        @Nullable
-        private String label;
-
-        @NonNull
-        private String pkg;
-
-        @NonNull
-        private String launcher;
-
-        public Bean(@Nullable String label, @NonNull String pkg, @NonNull String launcher) {
-            this.label = label;
-            this.pkg = pkg;
-            this.launcher = launcher;
-        }
-
-        @Nullable
-        public String getLabel() {
-            return label;
-        }
-
-        @NonNull
-        public String getPkg() {
-            return pkg;
-        }
-
-        @NonNull
-        public String getLauncher() {
-            return launcher;
+            return instance!!
         }
     }
 }

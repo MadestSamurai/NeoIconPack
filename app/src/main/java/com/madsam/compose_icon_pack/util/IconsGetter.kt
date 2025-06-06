@@ -14,100 +14,92 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack.util;
+package com.madsam.compose_icon_pack.util
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.support.annotation.NonNull;
-
-import com.by_syk.lib.nanoiconpack.R;
-import com.madsam.compose_icon_pack.bean.IconBean;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import android.content.Context
+import com.madsam.compose_icon_pack.R
+import com.madsam.compose_icon_pack.bean.IconBean
+import java.io.Serializable
+import java.util.regex.Pattern
 
 /**
  * Created by By_syk on 2017-03-26.
  */
+abstract class IconsGetter : Serializable {
 
-public abstract class IconsGetter implements Serializable {
-    private static List<IconBean> allIconList;
+    @Throws(Exception::class)
+    abstract fun getIcons(context: Context): List<IconBean>
 
-    private static Pattern namePattern = Pattern.compile("(?<=\\D|^)\\d(?=\\D|$)");
-
-    public abstract List<IconBean> getIcons(@NonNull Context context) throws Exception;
-
-    protected synchronized List<IconBean> getAllIcons(@NonNull Context context) throws Exception {
-        if (allIconList != null) {
-            List<IconBean> iconList = new ArrayList<>(allIconList.size());
-            iconList.addAll(allIconList);
-            return iconList;
-        }
-
-        Resources resources = context.getResources();
-        String[] names = resources.getStringArray(R.array.icons);
-        String[] labels = resources.getStringArray(R.array.icon_labels);
-        String[] labelPinyins;
-        if (labels.length > 0) {
-            labelPinyins = ExtraUtil.getPinyinForSorting(labels);
-        } else { // No app name list provided, use icon name list instead.
-            labels = new String[names.length];
-            for (int i = 0, len = names.length; i < len; ++i) {
-                labels[i] = names[i].replaceAll("_", " ");
+    @Throws(Exception::class)
+    protected fun getAllIcons(context: Context): MutableList<IconBean> {
+        synchronized(this) {
+            if (allIconList != null) {
+                return ArrayList(allIconList!!)
             }
-            labelPinyins = Arrays.copyOf(labels, labels.length);
-        }
-        for (int i = 0, len = labelPinyins.length; i < len; ++i) { // 优化100以内数值逻辑排序
-            Matcher matcher = namePattern.matcher(labelPinyins[i]);
-            if (matcher.find()) {
-                labelPinyins[i] = matcher.replaceAll("0" + matcher.group(0));
-            }
-        }
-        List<IconBean> dataList = new ArrayList<>();
-        for (int i = 0, len = names.length; i < len; ++i) {
-            int id = resources.getIdentifier(names[i], "drawable",
-                    context.getPackageName());
-            dataList.add(new IconBean(id, names[i], labels[i], labelPinyins[i]));
-        }
 
-        // With components
-        List<AppfilterReader.Bean> appfilterBeanList = AppfilterReader
-                .getInstance(context.getResources()).getDataList();
-        for (IconBean iconBean : dataList) {
-            for (AppfilterReader.Bean filterBean : appfilterBeanList) {
-                if (iconBean.getNameNoSeq().equals(filterBean.getDrawableNoSeq())) {
-                    iconBean.addComponent(filterBean.getPkg(), filterBean.getLauncher());
-                    if (iconBean.getName().equals(filterBean.getDrawable())) {
-                        iconBean.setDef(true);
+            val resources = context.resources
+            val names = resources.getStringArray(R.array.icons)
+            val labels = resources.getStringArray(R.array.icon_labels)
+            val labelPinyins = if (labels.isNotEmpty()) {
+                ExtraUtil.getPinyinForSorting(labels)
+            } else { // No app name list provided, use icon name list instead.
+                Array(names.size) { i -> names[i].replace("_", " ") }
+            }
+
+            // 优化100以内数值逻辑排序
+            for (i in labelPinyins.indices) {
+                val matcher = namePattern.matcher(labelPinyins[i])
+                if (matcher.find()) {
+                    val matchedGroup = matcher.group(0) ?: ""
+                    labelPinyins[i] = matcher.replaceAll("0$matchedGroup")
+                }
+            }
+
+            val dataList = ArrayList<IconBean>()
+            for (i in names.indices) {
+                val id = resources.getIdentifier(names[i], "drawable", context.packageName)
+                dataList.add(IconBean(id, names[i], labels.getOrElse(i) { names[i].replace("_", " ") }, labelPinyins[i]))
+            }
+
+            // With components
+            val appfilterBeanList = AppfilterReader
+                .getInstance(resources).dataList
+
+            for (iconBean in dataList) {
+                for (filterBean in appfilterBeanList) {
+                    if (iconBean.nameNoSeq == filterBean.drawableNoSeq) {
+                        iconBean.addComponent(filterBean.pkg, filterBean.launcher)
+                        if (iconBean.name == filterBean.drawable) {
+                            iconBean.isDef = true
+                        }
                     }
                 }
             }
-        }
 
-        // Check installed
-        Map<String, String> installedComponentLabelMap = InstalledAppReader
-                .getInstance(context.getPackageManager()).getComponentLabelMap();
-        for (IconBean bean : dataList) {
-            for (IconBean.Component component : bean.components) {
-                String componentStr = component.pkg + "/" + component.launcher;
-                if (installedComponentLabelMap.containsKey(componentStr)) {
-                    component.setInstalled(true);
-                    component.label = installedComponentLabelMap.get(componentStr);
+            // Check installed
+            val installedComponentLabelMap = InstalledAppReader
+                .getInstance(context.packageManager).getComponentLabelMap()
+
+            for (bean in dataList) {
+                for (component in bean.components) {
+                    val componentStr = "${component.pkg}/${component.launcher}"
+                    if (installedComponentLabelMap.containsKey(componentStr)) {
+                        component.isInstalled = true
+                        component.label = installedComponentLabelMap[componentStr]
+                    }
                 }
             }
+
+            dataList.sort()
+
+            allIconList = ArrayList(dataList)
+
+            return dataList
         }
+    }
 
-        Collections.sort(dataList);
-
-        allIconList = new ArrayList<>(dataList.size());
-        allIconList.addAll(dataList);
-
-        return dataList;
+    companion object {
+        private var allIconList: MutableList<IconBean>? = null
+        private val namePattern = Pattern.compile("(?<=\\D|^)\\d(?=\\D|$)")
     }
 }

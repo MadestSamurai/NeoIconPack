@@ -14,166 +14,90 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack.util;
+package com.madsam.compose_icon_pack.util
 
-import android.content.res.Resources;
-import android.content.res.XmlResourceParser;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-
-import com.by_syk.lib.nanoiconpack.R;
-
-import org.xmlpull.v1.XmlPullParser;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import android.content.res.Resources
+import android.content.res.XmlResourceParser
+import android.text.TextUtils
+import com.madsam.compose_icon_pack.R
+import org.xmlpull.v1.XmlPullParser
+import java.util.regex.Pattern
 
 /**
  * Created by By_syk on 2017-03-04.
  */
+class AppfilterReader private constructor(resources: Resources) {
+    val dataList: MutableList<Bean> = ArrayList()
 
-public class AppfilterReader {
-    private static AppfilterReader instance;
-
-    @NonNull
-    private List<Bean> dataList = new ArrayList<>();
-
-    private static Pattern componentPattern = Pattern.compile("ComponentInfo\\{([^/]+?)/(.+?)\\}");
-
-    private AppfilterReader(@NonNull Resources resources) {
-        init(resources);
+    init {
+        init(resources)
     }
 
-    private boolean init(@NonNull Resources resources) {
+    private fun init(resources: Resources): Boolean {
         try {
-            XmlResourceParser parser = resources.getXml(R.xml.appfilter);
-            int event = parser.getEventType();
+            val parser: XmlResourceParser = resources.getXml(R.xml.appfilter)
+            var event = parser.eventType
             while (event != XmlPullParser.END_DOCUMENT) {
                 if (event == XmlPullParser.START_TAG) {
-                    if (!"item".equals(parser.getName())) {
-                        event = parser.next();
-                        continue;
+                    if (parser.name != "item") {
+                        event = parser.next()
+                        continue
                     }
-                    String drawable = parser.getAttributeValue(null, "drawable");
+                    val drawable = parser.getAttributeValue(null, "drawable")
                     if (TextUtils.isEmpty(drawable)) {
-                        event = parser.next();
-                        continue;
+                        event = parser.next()
+                        continue
                     }
-                    String component = parser.getAttributeValue(null, "component");
+                    val component = parser.getAttributeValue(null, "component")
                     if (TextUtils.isEmpty(component)) {
-                        event = parser.next();
-                        continue;
+                        event = parser.next()
+                        continue
                     }
-                    Matcher matcher = componentPattern.matcher(component);
+                    val matcher = componentPattern.matcher(component)
                     if (!matcher.matches()) {
-                        event = parser.next();
-                        continue;
+                        event = parser.next()
+                        continue
                     }
-                    dataList.add(new Bean(matcher.group(1), matcher.group(2), drawable));
+                    dataList.add(Bean(matcher.group(1), matcher.group(2), drawable))
                 }
-                event = parser.next();
+                event = parser.next()
             }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+            return true
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        return false;
+        return false
     }
 
-    @NonNull
-    public List<Bean> getDataList() {
-        return dataList;
-    }
+    val pkgSet: Set<String>
+        get() = dataList.map { it.pkg }.toSet()
 
-    @NonNull
-    public Set<String> getPkgSet() {
-        Set<String> pkgSet = new HashSet<>(dataList.size());
-        for (Bean bean : dataList) {
-            pkgSet.add(bean.pkg);
-        }
-        return pkgSet;
-    }
+    val componentSet: Set<String>
+        get() = dataList.map { "${it.pkg}/${it.launcher}" }.toSet()
 
-    @NonNull
-    public Set<String> getComponentSet() {
-        Set<String> pkgLauncherSet = new HashSet<>(dataList.size());
-        for (Bean bean : dataList) {
-            pkgLauncherSet.add(bean.pkg + "/" + bean.launcher);
-        }
-        return pkgLauncherSet;
-    }
-
-//    @NonNull
-//    public List<Bean> findByDrawable(@Nullable String drawable) {
-//        if (TextUtils.isEmpty(drawable)) {
-//            return new ArrayList<>();
-//        }
-//
-//        List<Bean> list = new ArrayList<>();
-//        String drawableNoSeq = ExtraUtil.purifyIconName(drawable);
-//        for (Bean bean : dataList) {
-//            if (bean.drawableNoSeq.equals(drawableNoSeq)) {
-//                list.add(bean);
-//            }
-//        }
-//        return list;
-//    }
-
-    public static AppfilterReader getInstance(@NonNull Resources resources) {
-        if (instance == null) {
-            synchronized (AppfilterReader.class) {
-                if (instance == null) {
-                    instance = new AppfilterReader(resources);
-                }
-            }
-        }
-
-        return instance;
-    }
-
-    public class Bean {
-        @NonNull
-        private String pkg;
-
-        @NonNull
-        private String launcher;
-
-        @NonNull
-        private String drawable;
-
+    inner class Bean(
+        val pkg: String,
+        val launcher: String,
+        val drawable: String
+    ) {
         // extra
-        @NonNull
-        private String drawableNoSeq;
+        val drawableNoSeq: String = ExtraUtil.purifyIconName(drawable)
+    }
 
-        Bean(@NonNull String pkg, @NonNull String launcher, @NonNull String drawable) {
-            this.pkg = pkg;
-            this.launcher = launcher;
-            this.drawable = drawable;
-            this.drawableNoSeq = ExtraUtil.purifyIconName(drawable);
-        }
+    companion object {
+        private var instance: AppfilterReader? = null
+        private val componentPattern = Pattern.compile("ComponentInfo\\{([^/]+?)/(.+?)\\}")
 
-        @NonNull
-        public String getPkg() {
-            return pkg;
-        }
-
-        @NonNull
-        public String getLauncher() {
-            return launcher;
-        }
-
-        @NonNull
-        public String getDrawable() {
-            return drawable;
-        }
-
-        @NonNull
-        public String getDrawableNoSeq() {
-            return drawableNoSeq;
+        @JvmStatic
+        fun getInstance(resources: Resources): AppfilterReader {
+            if (instance == null) {
+                synchronized(AppfilterReader::class.java) {
+                    if (instance == null) {
+                        instance = AppfilterReader(resources)
+                    }
+                }
+            }
+            return instance!!
         }
     }
 }

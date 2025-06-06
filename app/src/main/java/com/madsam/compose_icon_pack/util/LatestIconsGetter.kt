@@ -14,41 +14,29 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack.util;
+package com.madsam.compose_icon_pack.util
 
-import android.content.Context;
-import android.support.annotation.NonNull;
+import android.content.Context
+import com.madsam.compose_icon_pack.R
+import com.madsam.compose_icon_pack.bean.IconBean
+import java.io.Serializable
 
-import com.by_syk.lib.nanoiconpack.R;
-import com.madsam.compose_icon_pack.bean.IconBean;
+class LatestIconsGetter : IconsGetter(), Serializable {
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
-/**
- * Created by By_syk on 2017-03-26.
- */
-
-public class LatestIconsGetter extends IconsGetter implements Serializable {
-    @Override
-    public List<IconBean> getIcons(@NonNull Context context) throws Exception {
-        List<IconBean> dataList = getAllIcons(context);
-        filterNotNew(context, dataList);
-        return dataList;
+    @Throws(Exception::class)
+    override fun getIcons(context: Context): List<IconBean> {
+        val dataList = getAllIcons(context)
+        filterNotNew(context, dataList)
+        return dataList
     }
 
-    private void filterNotNew(@NonNull Context context, @NonNull List<IconBean> iconList) {
-        String[] names = context.getResources().getStringArray(R.array.latest_icons);
-        Set<String> nameSet = new HashSet<>();
-        nameSet.addAll(Arrays.asList(names));
-        Iterator<IconBean> iterator = iconList.iterator();
+    private fun filterNotNew(context: Context, iconList: MutableList<IconBean>) {
+        val names = context.resources.getStringArray(R.array.latest_icons)
+        val nameSet = names.toHashSet()
+        val iterator = iconList.iterator()
         while (iterator.hasNext()) {
-            if (!nameSet.contains(iterator.next().getName())) {
-                iterator.remove();
+            if (!nameSet.contains(iterator.next().name)) {
+                iterator.remove()
             }
         }
     }
