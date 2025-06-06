@@ -15,10 +15,18 @@ class InstalledAppReader private constructor(packageManager: PackageManager) {
 
     private fun init(packageManager: PackageManager) {
         try {
+            // 只获取有启动器图标的应用
             val mainIntent = Intent(Intent.ACTION_MAIN, null)
             mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-            val list = packageManager.queryIntentActivities(mainIntent, 0)
-            for (resolveInfo in list) {
+            val launcherApps = packageManager.queryIntentActivities(
+                mainIntent,
+                PackageManager.GET_META_DATA or PackageManager.MATCH_ALL
+            )
+
+            android.util.Log.d("InstalledAppReader", "带启动器应用数量: ${launcherApps.size}")
+
+            // 只添加启动器应用
+            for (resolveInfo in launcherApps) {
                 dataList.add(
                     Bean(
                         resolveInfo.loadLabel(packageManager).toString(),
@@ -27,7 +35,10 @@ class InstalledAppReader private constructor(packageManager: PackageManager) {
                     )
                 )
             }
+
+            android.util.Log.d("InstalledAppReader", "收集的应用总数: ${dataList.size}")
         } catch (e: Exception) {
+            android.util.Log.e("InstalledAppReader", "初始化失败", e)
             e.printStackTrace()
         }
     }

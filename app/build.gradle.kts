@@ -5,7 +5,6 @@ plugins {
 }
 
 android {
-    namespace = "com.madsam.compose_icon_pack"
     compileSdk = 35
 
     defaultConfig {
@@ -14,16 +13,12 @@ android {
         targetSdk = 35
         versionCode = 17103000
         versionName = "4.0.0"
+        namespace = "com.madsam.compose_icon_pack"
     }
 
     buildFeatures {
         compose = true
-        viewBinding = true // 过渡期保留
-    }
-
-    @Suppress("UnstableApiUsage")
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
+        buildConfig = true
     }
 
     compileOptions {
@@ -34,6 +29,14 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    lint {
+        disable += "QueryAllPackagesPermission"
+    }
+}
+
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
 dependencies {

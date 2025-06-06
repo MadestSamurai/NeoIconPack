@@ -80,6 +80,10 @@ fun LostIconsScreen(
         scope.launch {
             isRefreshing = true
             loadAppList(context, appList)
+
+            // 重置所有应用的图标状态
+            appList.forEach { it.updateIcon(null) }
+
             filteredAppList.clear()
             filteredAppList.addAll(appList.filter {
                 it.label.contains(searchQuery, ignoreCase = true) ||
@@ -101,29 +105,33 @@ fun LostIconsScreen(
         onIconCountUpdated(filteredAppList.size)
     }
 
-    LaunchedEffect(listState) {
-        snapshotFlow {
-            listState.firstVisibleItemIndex to listState.layoutInfo.visibleItemsInfo.size
-        }.collectLatest { (firstVisible, visibleCount) ->
-            loadIconsJob?.cancel()
-            loadIconsJob = scope.launch {
-                if (filteredAppList.isNotEmpty()) {
-                    val start = firstVisible
-                    val end = (firstVisible + visibleCount + 5).coerceAtMost(filteredAppList.size) // 多加载几个提高体验
+    // 修改 LaunchedEffect 的依赖项
+    LaunchedEffect(listState, isRefreshing) {
+        // 在刷新完成后触发重新加载
+        if (!isRefreshing) {
+            snapshotFlow {
+                listState.firstVisibleItemIndex to listState.layoutInfo.visibleItemsInfo.size
+            }.collectLatest { (firstVisible, visibleCount) ->
+                loadIconsJob?.cancel()
+                loadIconsJob = scope.launch {
+                    if (filteredAppList.isNotEmpty()) {
+                        val start = firstVisible
+                        val end = (firstVisible + visibleCount + 5).coerceAtMost(filteredAppList.size)
 
-                    for (i in start until end) {
-                        if (!isActive) break
+                        for (i in start until end) {
+                            if (!isActive) break
 
-                        val app = filteredAppList[i]
-                        if (app.icon == null) {
-                            val icon = withContext(Dispatchers.IO) {
-                                PkgUtil.getIcon(
-                                    context.packageManager,
-                                    app.pkg,
-                                    app.launcher
-                                )
+                            val app = filteredAppList[i]
+                            if (app.icon == null) {
+                                val icon = withContext(Dispatchers.IO) {
+                                    PkgUtil.getIcon(
+                                        context.packageManager,
+                                        app.pkg,
+                                        app.launcher
+                                    )
+                                }
+                                app.updateIcon(icon)
                             }
-                            app.updateIcon(icon) // 使用更新函数
                         }
                     }
                 }
@@ -218,11 +226,14 @@ private suspend fun loadAppList(context: Context, appList: MutableList<AppBean>)
 
         // 假设已添加这些方法
         val installedApps = installedAppReader.getDataList()
-        val appfilterComponents = appFilterReader.componentSet
+        val appFilterComponents = appFilterReader.componentSet
+
+        android.util.Log.d("LostIconScreen", "安装的应用总数: ${installedApps.size}")
+        android.util.Log.d("LostIconScreen", "已适配组件总数: ${appFilterComponents.size}")
 
         for (app in installedApps) {
             // 跳过已经适配的应用
-            if (appfilterComponents.contains("${app.pkg}/${app.launcher}")) {
+            if (appFilterComponents.contains("${app.pkg}/${app.launcher}")) {
                 continue
             }
 

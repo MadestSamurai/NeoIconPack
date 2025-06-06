@@ -16,7 +16,24 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.madsam.compose_icon_pack">
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <queries>
+        <!-- 允许查询所有带启动器的应用 -->
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+
+        <!-- 允许查询所有已安装的应用 -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+        </intent>
+    </queries>
 
     <!-- 从nanoiconpack模块合并的权限 -->
     <!-- for saving icons -->

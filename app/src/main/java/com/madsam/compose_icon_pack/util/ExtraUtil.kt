@@ -16,7 +16,6 @@
 
 package com.madsam.compose_icon_pack.util
 
-import android.annotation.TargetApi
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -34,6 +33,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
+import androidx.core.graphics.createBitmap
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -136,15 +136,33 @@ object ExtraUtil {
             return false
         }
 
-        val bitmap = (drawable as BitmapDrawable).bitmap ?: return false
+        // 处理不同类型的 Drawable
+        val bitmap = when (drawable) {
+            is BitmapDrawable -> drawable.bitmap
+            else -> {
+                // 将任何类型的 Drawable 转换为 Bitmap
+                try {
+                    val width = if (drawable.intrinsicWidth > 0) drawable.intrinsicWidth else 192
+                    val height = if (drawable.intrinsicHeight > 0) drawable.intrinsicHeight else 192
 
-        // Create a path where we will place our picture
-        // in the user's public pictures directory.
+                    val bitmap = createBitmap(width, height)
+                    val canvas = android.graphics.Canvas(bitmap)
+                    drawable.setBounds(0, 0, canvas.width, canvas.height)
+                    drawable.draw(canvas)
+                    bitmap
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    return false
+                }
+            }
+        }
+
+        // 创建保存路径
         val picDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Icons")
-        // Make sure the Pictures directory exists.
         picDir.mkdirs()
         val targetFile = File(picDir, "ic_${name}_${bitmap.byteCount}.png")
 
+        // 保存图像
         var result = false
         var outputStream: OutputStream? = null
         try {
