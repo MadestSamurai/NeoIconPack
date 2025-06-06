@@ -85,8 +85,8 @@ public class IconDialog extends DialogFragment {
 //                ivIcon.setImageResource(iconBean.getId());
                 int hdIconId = getResources().getIdentifier(iconBean.getName(), "mipmap",
                         getContext().getPackageName());
-                ivIcon.setImageResource(hdIconId != 0 ? hdIconId : iconBean.getId());
-                viewActionSave.setVisibility(iconBean.getId() != 0 || hdIconId != 0
+                ivIcon.setImageResource(hdIconId != 0 ? hdIconId : iconBean.id);
+                viewActionSave.setVisibility(iconBean.id != 0 || hdIconId != 0
                         ? View.VISIBLE : View.GONE);
                 viewActionSend2Home.setVisibility(iconBean.containsInstalledComponent()
                         ? View.VISIBLE : View.GONE);
@@ -196,7 +196,7 @@ public class IconDialog extends DialogFragment {
 
     private SpannableString getTitle(@NonNull IconBean bean) {
         TextTag.Builder builder = new TextTag.Builder()
-                .text(iconBean.getLabel() != null ? iconBean.getLabel() : iconBean.getName())
+                .text(iconBean.label != null ? iconBean.label : iconBean.getName())
                 .bgColor(Color.GRAY);
         if (!bean.isRecorded()) {
             builder.tag(getString(R.string.icon_tag_undefined));
@@ -217,7 +217,7 @@ public class IconDialog extends DialogFragment {
         int iconId = getResources().getIdentifier(iconBean.getName(), "mipmap",
                 getContext().getPackageName());
         if (iconId == 0) {
-            iconId = iconBean.getId();
+            iconId = iconBean.id;
         }
         boolean ok = ExtraUtil.saveIcon(getContext(), getResources().getDrawable(iconId),
                 iconBean.getName());
@@ -231,7 +231,7 @@ public class IconDialog extends DialogFragment {
 
     private void sendIcon() {
         IconBean.Component targetComponent = null;
-        for (IconBean.Component component : iconBean.getComponents()) { // TODO
+        for (IconBean.Component component : iconBean.components) { // TODO
             if (component.isInstalled()) {
                 targetComponent = component;
                 break;
@@ -239,15 +239,15 @@ public class IconDialog extends DialogFragment {
         }
         boolean ok = false;
         if (targetComponent != null) {
-            String label = targetComponent.getLabel();
+            String label = targetComponent.label;
             if (label == null) {
-                label = iconBean.getLabel();
+                label = iconBean.label;
             }
             if (label == null) {
                 label = iconBean.getName();
             }
-            ok = ExtraUtil.sendIcon2HomeScreen(getContext(), iconBean.getId(), label,
-                    targetComponent.getPkg(), targetComponent.getLauncher());
+            ok = ExtraUtil.sendIcon2HomeScreen(getContext(), iconBean.id, label,
+                    targetComponent.pkg, targetComponent.launcher);
         }
         // Not .getDrawable().setTint()
         ((ImageView) viewActionSend2Home).getDrawable().mutate().setTint(ContextCompat
@@ -259,7 +259,7 @@ public class IconDialog extends DialogFragment {
     private void returnPickIcon() {
         Bitmap bitmap = null;
         try {
-            bitmap = BitmapFactory.decodeResource(getResources(), iconBean.getId());
+            bitmap = BitmapFactory.decodeResource(getResources(), iconBean.id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -267,9 +267,9 @@ public class IconDialog extends DialogFragment {
         Intent intent = new Intent();
         if (bitmap != null) {
             intent.putExtra("icon", bitmap);
-            intent.putExtra("android.intent.extra.shortcut.ICON_RESOURCE", iconBean.getId());
+            intent.putExtra("android.intent.extra.shortcut.ICON_RESOURCE", iconBean.id);
             intent.setData(Uri.parse("android.resource://" + getContext().getPackageName()
-                    + "/" + String.valueOf(iconBean.getId())));
+                    + "/" + String.valueOf(iconBean.id)));
             getActivity().setResult(Activity.RESULT_OK, intent);
         } else {
             getActivity().setResult(Activity.RESULT_CANCELED, intent);
@@ -284,12 +284,12 @@ public class IconDialog extends DialogFragment {
                 return null;
             }
             PackageManager packageManager = getContext().getPackageManager();
-            for (IconBean.Component component : iconBean.getComponents()) {
+            for (IconBean.Component component : iconBean.components) {
                 if (!component.isInstalled()) {
                     continue;
                 }
                 Drawable icon = PkgUtil.getIcon(packageManager,
-                        component.getPkg(), component.getLauncher());
+                        component.pkg, component.launcher);
                 if (icon != null) {
                     return icon;
                 }

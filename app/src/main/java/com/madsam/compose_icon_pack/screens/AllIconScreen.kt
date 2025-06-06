@@ -12,10 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Whatshot
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,10 +52,19 @@ fun AllIconsScreen(
     var icons by remember { mutableStateOf<List<IconModel>>(emptyList()) }
 
     LaunchedEffect(true) {
-        // 假设AllIconsGetter已转换为Kotlin并支持协程
-        AllIconsGetter().getIcons(context)?.let {
-            icons = it
-            onIconCountUpdated(it.size)
+        // 从IconBean转换为IconModel
+        AllIconsGetter().getIcons(context).let { iconBeans ->
+            // 将IconBean转换为IconModel
+            val iconModels = iconBeans.map { bean ->
+                IconModel(
+                    iconId = bean.iconId,
+                    label = bean.label ?: "",
+                    fullResName = bean.name,
+                    packageName = bean.components.firstOrNull()?.pkg ?: "" // 使用第一个组件的包名
+                )
+            }
+            icons = iconModels
+            onIconCountUpdated(iconModels.size)
         }
     }
 
@@ -67,7 +77,7 @@ fun AllIconsScreen(
                         Icon(Icons.Default.Search, contentDescription = "搜索")
                     }
                     IconButton(onClick = onShowWhatsNew) {
-                        Icon(Icons.Default.Whatshot, contentDescription = "新增图标")
+                        Icon(Icons.Default.Star, contentDescription = "新增图标")
                     }
                     IconButton(onClick = { showMenu = true }) {
                         Icon(Icons.Default.Info, contentDescription = "关于")

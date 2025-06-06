@@ -14,49 +14,105 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack;
+package com.madsam.compose_icon_pack
 
-import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import com.madsam.compose_icon_pack.bean.IconBean
+import com.madsam.compose_icon_pack.screens.IconGridScreen
+import com.madsam.compose_icon_pack.ui.theme.ComposeIconPackTheme
+import com.madsam.compose_icon_pack.util.AllIconsGetter
 
-import com.madsam.compose_icon_pack.fragment.IconsFragment;
-import com.madsam.compose_icon_pack.util.AllIconsGetter;
+class IconPickActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-/**
- * Created by By_syk on 2017-01-30.
- */
+        val pickerGridItemMode = resources.getInteger(R.integer.picker_grid_item_mode)
 
-public class IconPickActivity extends AppCompatActivity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_icon_pick);
+        setContent {
+            ComposeIconPackTheme {
+                IconPickScreen(
+                    pickerGridItemMode = pickerGridItemMode,
+                    onBackPressed = { finish() }
+                )
+            }
+        }
+    }
+}
 
-        init();
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun IconPickScreen(
+    pickerGridItemMode: Int,
+    onBackPressed: () -> Unit
+) {
+    val context = LocalContext.current
+    var icons by remember { mutableStateOf<List<IconBean>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+
+    // 加载图标数据
+    LaunchedEffect(true) {
+        try {
+            AllIconsGetter().getIcons(context).let { iconList ->
+                icons = iconList
+            }
+        } finally {
+            isLoading = false
+        }
     }
 
-    private void init() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(text = "选择图标") },
+                navigationIcon = {
+                    IconButton(onClick = onBackPressed) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "返回"
+                        )
+                    }
+                }
+            )
         }
-
-        IconsFragment fragment = IconsFragment.newInstance(0, new AllIconsGetter(),
-                getResources().getInteger(R.integer.picker_grid_item_mode));
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_content, fragment)
-                .commit();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            finish();
-            return true;
+    ) { paddingValues ->
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            // 图标网格展示
+            IconGridScreen(
+                icons = icons,
+                isLoading = isLoading,
+                gridItemMode = pickerGridItemMode,
+                paddingValues = paddingValues,
+                onItemClick = { icon ->
+                    // 这里处理图标选择逻辑
+                    // 例如设置结果并完成活动
+                    // setResult(...)
+                    onBackPressed()
+                }
+            )
         }
-        return super.onOptionsItemSelected(item);
     }
 }

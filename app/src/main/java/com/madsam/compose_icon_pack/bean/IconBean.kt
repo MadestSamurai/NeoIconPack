@@ -14,196 +14,81 @@
  * limitations under the License.
  */
 
-package com.madsam.compose_icon_pack.bean;
+package com.madsam.compose_icon_pack.bean
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
-import com.madsam.compose_icon_pack.util.ExtraUtil;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import com.madsam.compose_icon_pack.util.ExtraUtil
+import java.io.Serializable
 
 /**
- * Created by By_syk on 2017-01-27.
+ * 图标数据类
  */
+data class IconBean(
+    var iconId: Int,
+    var name: String
+) : Serializable, Comparable<IconBean> {
 
-public class IconBean implements Serializable, Comparable<IconBean> {
-    private int id = 0;
+    // 提取后的名称（无序列号）
+    val nameNoSeq: String = ExtraUtil.purifyIconName(name)
 
-    @NonNull
-    private String name = "";
+    // 图标标签
+    var label: String? = null
 
-    // extra
-    @NonNull
-    private String nameNoSeq = "";
+    // 拼音（用于排序）
+    var labelPinyin: String? = null
 
-    @Nullable
-    private String label;
+    // 组件集合
+    val components: MutableSet<Component> = HashSet()
 
-    // extra
-    private String labelPinyin;
+    // 是否为默认图标
+    var isDef: Boolean = false
 
-    @NonNull
-    private Set<Component> components = new HashSet<>();
+    // 是否已被记录
+    val isRecorded: Boolean
+        get() = components.isNotEmpty()
 
-    // extra
-    // Mark that the icon is the default one recorded in appfilter.xml.
-    // If true, the var "recorded" must be true.
-    private boolean def = false;
+    /**
+     * 添加组件
+     */
+    fun addComponent(pkg: String?, launcher: String?): Boolean {
+        if (pkg == null || launcher == null) return false
 
-    public IconBean(int id, String name) {
-        setId(id);
-        setName(name);
+        return components.add(Component(pkg, launcher))
     }
 
-    public IconBean(int id, String name, String label, String labelPinyin) {
-        this(id, name);
-        setLabel(label);
-        setLabelPinyin(labelPinyin);
+    /**
+     * 检查是否包含已安装的组件
+     */
+    fun containsInstalledComponent(): Boolean {
+        return components.any { it.isInstalled }
     }
 
-    public void setId(int id) {
-        this.id = id;
+    /**
+     * 二次构造函数，包含标签和拼音
+     */
+    constructor(id: Int, name: String, label: String?, labelPinyin: String?) : this(id, name) {
+        this.label = label
+        this.labelPinyin = labelPinyin
     }
 
-    public void setName(@Nullable String name) {
-        if (name != null) {
-            this.name = name;
-            this.nameNoSeq = ExtraUtil.purifyIconName(name);
-        }
+    override fun compareTo(other: IconBean): Int {
+        // 安全处理拼音可能为null的情况
+        val thisPinyin = this.labelPinyin ?: ""
+        val otherPinyin = other.labelPinyin ?: ""
+        return thisPinyin.compareTo(otherPinyin)
     }
 
-    public void setLabel(@Nullable String label) {
-        this.label = label;
-    }
+    /**
+     * 组件数据类
+     */
+    data class Component(
+        val pkg: String,
+        val launcher: String
+    ) : Serializable {
 
-    public void setLabelPinyin(String labelPinyin) {
-        this.labelPinyin = labelPinyin;
-    }
+        // 组件标签
+        var label: String? = null
 
-    public boolean addComponent(@Nullable String pkg, @Nullable String launcher) {
-        if (pkg == null || launcher == null) {
-            return false;
-        }
-        components.add(new Component(pkg, launcher));
-        return true;
-    }
-
-    public void setDef(boolean def) {
-        this.def = def;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @NonNull
-    public String getName() {
-        return name;
-    }
-
-    @NonNull
-    public String getNameNoSeq() {
-        return nameNoSeq;
-    }
-
-    @Nullable
-    public String getLabel() {
-        return label;
-    }
-
-    public String getLabelPinyin() {
-        return labelPinyin;
-    }
-
-    @NonNull
-    public Set<Component> getComponents() {
-        return components;
-    }
-
-    public boolean containsInstalledComponent() {
-        for (IconBean.Component component : components) {
-            if (component.isInstalled()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isRecorded() {
-        return components.size() > 0;
-    }
-
-    public boolean isDef() {
-        return def;
-    }
-
-    @Override
-    public int compareTo(@NonNull IconBean bean) {
-        return this.getLabelPinyin().compareTo(bean.getLabelPinyin());
-    }
-
-    public class Component implements Serializable {
-        @NonNull
-        private String pkg;
-
-        @NonNull
-        private String launcher;
-
-        // extra
-        @Nullable
-        private String label;
-
-        // extra
-        // Mark that app of the icon is installed.
-        private boolean installed = false;
-
-        Component(@NonNull String pkg, @NonNull String launcher) {
-            this.pkg = pkg;
-            this.launcher = launcher;
-        }
-
-        public void setLabel(@Nullable String label) {
-            this.label = label;
-        }
-
-        public void setInstalled(boolean installed) {
-            this.installed = installed;
-        }
-
-        @NonNull
-        public String getPkg() {
-            return pkg;
-        }
-
-        @NonNull
-        public String getLauncher() {
-            return launcher;
-        }
-
-        @Nullable
-        public String getLabel() {
-            return label;
-        }
-
-        public boolean isInstalled() {
-            return installed;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof Component)) {
-                return false;
-            }
-            Component c2 = (Component) obj;
-            return pkg.equals(c2.getPkg()) && launcher.equals(c2.getLauncher());
-        }
-
-        @Override
-        public int hashCode() {
-            return (pkg + "/" + launcher).hashCode();
-        }
+        // 是否已安装
+        var isInstalled: Boolean = false
     }
 }

@@ -94,11 +94,11 @@ public abstract class IconsGetter implements Serializable {
         Map<String, String> installedComponentLabelMap = InstalledAppReader
                 .getInstance(context.getPackageManager()).getComponentLabelMap();
         for (IconBean bean : dataList) {
-            for (IconBean.Component component : bean.getComponents()) {
-                String componentStr = component.getPkg() + "/" + component.getLauncher();
+            for (IconBean.Component component : bean.components) {
+                String componentStr = component.pkg + "/" + component.launcher;
                 if (installedComponentLabelMap.containsKey(componentStr)) {
                     component.setInstalled(true);
-                    component.setLabel(installedComponentLabelMap.get(componentStr));
+                    component.label = installedComponentLabelMap.get(componentStr);
                 }
             }
         }

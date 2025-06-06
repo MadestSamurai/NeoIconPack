@@ -13,24 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.madsam.compose_icon_pack.util
 
-package com.madsam.compose_icon_pack.util;
-
-import android.content.Context;
-import android.support.annotation.NonNull;
-
-import com.madsam.compose_icon_pack.bean.IconBean;
-
-import java.io.Serializable;
-import java.util.List;
+import android.content.Context
+import com.madsam.compose_icon_pack.bean.IconBean
+import java.io.Serializable
 
 /**
  * Created by By_syk on 2017-03-26.
  */
-
-public class AllIconsGetter extends IconsGetter implements Serializable {
-    @Override
-    public List<IconBean> getIcons(@NonNull Context context) throws Exception {
-        return getAllIcons(context);
+class AllIconsGetter : IconsGetter(), Serializable {
+    @Throws(Exception::class)
+    override fun getIcons(context: Context?): MutableList<IconBean> {
+        return getAllIcons(context)
     }
 }

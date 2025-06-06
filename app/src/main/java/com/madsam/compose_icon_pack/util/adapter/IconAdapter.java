@@ -104,14 +104,14 @@ public class IconAdapter extends RecyclerView.Adapter
         if (holder instanceof IconLabelViewHolder) {
             IconLabelViewHolder viewHolder = (IconLabelViewHolder) holder;
 //            viewHolder.ivIcon.setImageResource(dataList.get(position).getId());
-            glideReqManager.load(dataList.get(position).getId())
+            glideReqManager.load(dataList.get(position).id)
                     .apply(new RequestOptions().fitCenter())
                     .into(viewHolder.ivIcon);
-            viewHolder.tvLabel.setText(dataList.get(position).getLabel());
+            viewHolder.tvLabel.setText(dataList.get(position).label);
         } else {
             IconViewHolder viewHolder = (IconViewHolder) holder;
 //            viewHolder.ivIcon.setImageResource(dataList.get(position).getId());
-            glideReqManager.load(dataList.get(position).getId())
+            glideReqManager.load(dataList.get(position).id)
                     .apply(new RequestOptions().fitCenter())
                     .into(viewHolder.ivIcon);
         }
@@ -140,7 +140,7 @@ public class IconAdapter extends RecyclerView.Adapter
     @NonNull
     @Override
     public String getSectionName(int position) {
-        return dataList.get(position).getLabelPinyin().substring(0, 1).toUpperCase();
+        return dataList.get(position).labelPinyin.substring(0, 1).toUpperCase();
     }
 
     public void setMode(int mode) {
