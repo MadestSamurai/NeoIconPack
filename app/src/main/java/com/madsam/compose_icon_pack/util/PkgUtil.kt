@@ -13,278 +13,159 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.madsam.compose_icon_pack.util
 
-package com.madsam.compose_icon_pack.util;
-
-import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.text.TextUtils;
-import android.util.Log;
-
-import java.util.Locale;
+import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.graphics.drawable.Drawable
+import android.util.Log
+import java.util.Locale
 
 /**
- * Created by By_syk on 2017-02-15.
+ * 包工具类，提供应用包信息相关操作
  */
-
-public class PkgUtil {
-//    public static boolean isPkgInstalled(Context context, String pkgName) {
-//        if (context == null || pkgName == null) {
-//            return false;
-//        }
-//
-//        try {
-//            context.getPackageManager().getPackageInfo(pkgName, 0);
-//            return true;
-//        } catch (Exception e) {
-//            //e.printStackTrace();
-//        }
-//
-//        return false;
-//    }
-
-    public static boolean isPkgInstalledAndEnabled(Context context, String pkgName) {
-        return getLauncherActivity(context, pkgName) != null;
-    }
-
-//    public static List<String> getInstalledPkgs(Context context) {
-//        List<String> pkgNameList = new ArrayList<>();
-//        if (context == null) {
-//            return pkgNameList;
-//        }
-//
-//        try {
-//            List<PackageInfo> pkgList = context.getPackageManager().getInstalledPackages(0);
-//            if (pkgList != null) {
-//                for (PackageInfo packageInfo : pkgList) {
-//                    pkgNameList.add(packageInfo.packageName);
-//                }
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return pkgNameList;
-//    }
-
-//    public static List<String> getInstalledPkgsWithLauncherActivity(Context context) {
-//        List<String> pkgNameList = new ArrayList<>();
-//        if (context == null) {
-//            return pkgNameList;
-//        }
-//
-//        try {
-//            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-//            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//            List<ResolveInfo> list = context.getPackageManager().queryIntentActivities(mainIntent, 0);
-//            for (ResolveInfo resolveInfo : list) {
-//                pkgNameList.add(resolveInfo.activityInfo.packageName);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return pkgNameList;
-//    }
-
-//    public static Set<String> getInstalledComponents(@Nullable Context context) {
-//        Set<String> set = new HashSet<>();
-//        if (context == null) {
-//            return set;
-//        }
-//
-//        try {
-//            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-//            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-//            List<ResolveInfo> list = context.getPackageManager().queryIntentActivities(mainIntent, 0);
-//            for (ResolveInfo resolveInfo : list) {
-//                set.add(resolveInfo.activityInfo.packageName + "/" + resolveInfo.activityInfo.name);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return set;
-//    }
-
-    public static String getLauncherActivity(Context context, String pkgName) {
-        if (context == null || pkgName == null) {
-            return null;
-        }
-
-        try {
-            Intent intent = context.getPackageManager().getLaunchIntentForPackage(pkgName);
-            if (intent != null) {
-                return intent.getComponent().getClassName();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static String getCurLauncher(Context context) {
-        if (context == null) {
-            return null;
-        }
-
-        try {
-            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_HOME);
-            ResolveInfo resolveInfo = context.getPackageManager().resolveActivity(mainIntent, 0);
-            if (resolveInfo != null) {
-                return resolveInfo.activityInfo.packageName;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @TargetApi(17)
-    public static String getAppLabelEn(Context context, String pkgName, String def) {
-        if (context == null || TextUtils.isEmpty(pkgName)) {
-            return def;
-        }
-
-        String result = def;
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            ApplicationInfo applicationInfo = packageManager.getPackageInfo(pkgName, 0).applicationInfo;
-
-            Configuration configuration = new Configuration();
-            // It's better, I think, to use Locale.ENGLISH
-            // instead of Locale.ROOT (although I want to do).
-            if (C.SDK >= 17) {
-                configuration.setLocale(Locale.ENGLISH);
-            } else {
-                configuration.locale = Locale.ENGLISH;
-            }
-            // The result is a value in disorder maybe if using:
-            //     packageManager.getResourcesForApplication(PACKAGE_NAME)
-            Resources resources = packageManager.getResourcesForApplication(applicationInfo);
-            resources.updateConfiguration(configuration,
-                    context.getResources().getDisplayMetrics());
-            int labelResId = applicationInfo.labelRes;
-            if (labelResId != 0) {
-                // If the localized label is not added, the default is returned.
-                // NOTICE!!!If the default were empty, Resources$NotFoundException would be called.
-                result = resources.getString(labelResId);
-            }
-
-            /*
-             * NOTICE!!!
-             * We have to restore the locale.
-             * On the one hand,
-             * it will influence the label of Activity, etc..
-             * On the other hand,
-             * the got "resources" equals the one "this.getResources()" if the current .apk file
-             * happens to be this APK Checker(com.by_syk.apkchecker).
-             * We need to restore the locale, or the language of APK Checker will change to English.
-             */
-            if (C.SDK >= 17) {
-                configuration.setLocale(Locale.getDefault());
-            } else {
-                configuration.locale = Locale.getDefault();
-            }
-            resources.updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-
-    public static boolean isSysApp(Context context, String pkgName) {
-        if (context == null || TextUtils.isEmpty(pkgName)) {
-            return false;
-        }
-
-        try {
-            PackageManager packageManager = context.getPackageManager();
-            ApplicationInfo applicationInfo = packageManager.getPackageInfo(pkgName, 0).applicationInfo;
-//            return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == ApplicationInfo.FLAG_SYSTEM;
-            return ((ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)
-                    & applicationInfo.flags) != 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    public static String getAppVer(Context context, String format) {
-        if (context == null || TextUtils.isEmpty(format)) {
-            return "";
-        }
-
-        try {
-            PackageInfo packageInfo = context.getPackageManager()
-                    .getPackageInfo(context.getPackageName(), 0);
-            return String.format(Locale.US, format, packageInfo.versionName, packageInfo.versionCode);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "";
+object PkgUtil {
+    /**
+     * 检查应用是否安装并启用
+     */
+    fun isPkgInstalledAndEnabled(context: Context?, pkgName: String?): Boolean {
+        return getLauncherActivity(context, pkgName) != null
     }
 
     /**
-     * Get launcher icon
+     * 获取应用启动活动
      */
-    public static Drawable getIcon(PackageManager pkgManager, String pkgName) {
-        if (pkgManager  == null || TextUtils.isEmpty(pkgName)) {
-            return null;
-        }
+    fun getLauncherActivity(context: Context?, pkgName: String?): String? {
+        if (context == null || pkgName.isNullOrEmpty()) return null
 
-        try {
-            PackageInfo packageInfo = pkgManager.getPackageInfo(pkgName, 0);
-            return packageInfo.applicationInfo.loadIcon(pkgManager);
-        } catch (Exception e) {
-            Log.d(C.LOG_TAG, pkgName + " is not installed.");
+        return try {
+            context.packageManager.getLaunchIntentForPackage(pkgName)?.component?.className
+        } catch (e: Exception) {
+            null
         }
-
-        return null;
     }
 
     /**
-     * Get Activity icon
+     * 获取当前启动器应用包名
      */
-    public static Drawable getIcon(PackageManager pkgManager, String pkgName, String activity) {
-        if (pkgManager  == null || TextUtils.isEmpty(pkgName) || TextUtils.isEmpty(activity)) {
-            return null;
-        }
+    fun getCurLauncher(context: Context?): String? {
+        if (context == null) return null
 
-        Intent intent = new Intent();
-        intent.setClassName(pkgName, activity);
-        ResolveInfo resolveInfo = pkgManager.resolveActivity(intent, 0);
-        if (resolveInfo != null) {
-            return resolveInfo.loadIcon(pkgManager);
+        return try {
+            val mainIntent = Intent(Intent.ACTION_MAIN).apply {
+                addCategory(Intent.CATEGORY_HOME)
+            }
+            context.packageManager.resolveActivity(mainIntent, 0)?.activityInfo?.packageName
+        } catch (e: Exception) {
+            null
         }
-        return null;
     }
 
-    @NonNull
-    public static String concatComponent(@NonNull String pkgName, String launcherActivity) {
-        String component = pkgName;
-        if (!TextUtils.isEmpty(launcherActivity)) {
-            if (launcherActivity.startsWith(pkgName)) {
-                component += "/" + launcherActivity.substring(pkgName.length());
-            } else {
-                component += "/" + launcherActivity;
+    /**
+     * 获取应用的英文标签
+     */
+    fun getAppLabelEn(context: Context?, pkgName: String?, def: String?): String? {
+        if (context == null || pkgName.isNullOrEmpty()) return def
+
+        return try {
+            val packageManager = context.packageManager
+            val applicationInfo = packageManager.getPackageInfo(pkgName, 0).applicationInfo ?: return def
+
+            val configuration = Configuration().apply {
+                locale = Locale.ENGLISH
             }
+
+            val resources = packageManager.getResourcesForApplication(applicationInfo)
+            resources.updateConfiguration(
+                configuration,
+                context.resources.displayMetrics
+            )
+
+            val labelResId = applicationInfo.labelRes
+            val result = if (labelResId != 0) resources.getString(labelResId) else def
+
+            // 恢复本地区域设置
+            resources.updateConfiguration(
+                Configuration().apply { locale = Locale.getDefault() },
+                context.resources.displayMetrics
+            )
+
+            result
+        } catch (e: Exception) {
+            def
         }
-        return component;
+    }
+
+    /**
+     * 检查是否为系统应用
+     */
+    fun isSysApp(context: Context?, pkgName: String?): Boolean {
+        if (context == null || pkgName.isNullOrEmpty()) return false
+
+        return try {
+            val applicationInfo = context.packageManager.getPackageInfo(pkgName, 0).applicationInfo
+            (applicationInfo?.flags?.and((ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP))) != 0
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    /**
+     * 获取应用版本信息
+     */
+    fun getAppVer(context: Context?, format: String? = "%s"): String {
+        if (context == null || format.isNullOrEmpty()) return ""
+
+        return try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            String.format(Locale.US, format, packageInfo.versionName, packageInfo.longVersionCode)
+        } catch (e: Exception) {
+            ""
+        }
+    }
+
+    /**
+     * 获取应用图标
+     */
+    fun getIcon(pkgManager: PackageManager?, pkgName: String?): Drawable? {
+        if (pkgManager == null || pkgName.isNullOrEmpty()) return null
+
+        return try {
+            pkgManager.getPackageInfo(pkgName, 0).applicationInfo?.loadIcon(pkgManager)
+        } catch (e: Exception) {
+            Log.d("IconPack", "$pkgName is not installed.")
+            null
+        }
+    }
+
+    /**
+     * 获取Activity图标
+     */
+    fun getIcon(pkgManager: PackageManager?, pkgName: String?, activity: String?): Drawable? {
+        if (pkgManager == null || pkgName.isNullOrEmpty() || activity.isNullOrEmpty()) return null
+
+        return try {
+            val intent = Intent().setClassName(pkgName, activity)
+            pkgManager.resolveActivity(intent, 0)?.loadIcon(pkgManager)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    /**
+     * 拼接组件名称
+     */
+    fun concatComponent(pkgName: String, launcherActivity: String?): String {
+        if (launcherActivity.isNullOrEmpty()) return pkgName
+
+        return when {
+            launcherActivity.startsWith(pkgName) ->
+                "$pkgName/${launcherActivity.substring(pkgName.length)}"
+            else ->
+                "$pkgName/$launcherActivity"
+        }
     }
 }
