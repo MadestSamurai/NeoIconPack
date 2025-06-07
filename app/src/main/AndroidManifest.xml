@@ -35,10 +35,6 @@
         </intent>
     </queries>
 
-    <!-- 从nanoiconpack模块合并的权限 -->
-    <!-- for saving icons -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <!-- for sending icon to home screen -->
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
 
@@ -46,13 +42,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!--
-    for android:theme=""
-    available themes:
-        AppThemeDark, AppThemeDarkDef,
-        AppThemeLight, AppThemeLightDef,
-        AppThemeLightWithDark, AppThemeLightWithDarkDef,
-    -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -88,7 +77,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 从nanoiconpack模块合并的Activity -->
         <activity
             android:name=".IconPickActivity"
             android:exported="true">
