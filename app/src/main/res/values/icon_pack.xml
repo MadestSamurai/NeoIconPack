@@ -21,6 +21,8 @@
     <!-- Names like "Calendar", "500px", "camera_360" are not allowed or recommended. -->
     <string-array name="icons" translatable="false">
         <item>alipay</item>
+        <item>acfun</item>
+        <item>app_market_oppo</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->

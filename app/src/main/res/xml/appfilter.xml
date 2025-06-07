@@ -102,8 +102,12 @@
         drawable="abc_bank" />
 
     <item
-        component="ComponentInfo{tv.acfundanmaku.video/tv.acfun.core.view.activity.SplashActivity}"
+        component="ComponentInfo{tv.acfundanmaku.video/tv.acfun.core.module.splash.SplashActivity}"
         drawable="acfun" />
+
+    <item
+        component="ComponentInfo{com.heytap.market/com.heytap.market.activity.MainActivity}"
+        drawable="app_market_oppo" />
 
     <item
         component="ComponentInfo{com.actionlauncher.playstore/com.actionlauncher.ActionLauncherActivity}"
