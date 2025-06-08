@@ -8,12 +8,12 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.madsam.compose_icon_pack"
+        applicationId = "com.madsam.neoiconpack"
         minSdk = 28
         targetSdk = 35
         versionCode = 17103000
         versionName = "4.0.0"
-        namespace = "com.madsam.compose_icon_pack"
+        namespace = "com.madsam.neoiconpack"
     }
 
     buildFeatures {

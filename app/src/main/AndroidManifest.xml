@@ -17,7 +17,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.madsam.compose_icon_pack">
+    package="com.madsam.neoiconpack">
 
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -49,7 +49,7 @@
         android:theme="@style/AppThemeLightWithDark">
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.madsam.neoiconpack.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,7 +78,7 @@
         </activity>
 
         <activity
-            android:name=".IconPickActivity"
+            android:name="com.madsam.neoiconpack.IconPickActivity"
             android:exported="true">
             <!-- For Nova -->
             <intent-filter>
@@ -93,22 +93,22 @@
         </activity>
 
         <activity
-            android:name=".WhatsNewActivity"
+            android:name="com.madsam.neoiconpack.WhatsNewActivity"
             android:exported="false"
             android:label="@string/activity_whats_new" />
 
         <activity
-            android:name=".SearchActivity"
+            android:name="com.madsam.neoiconpack.SearchActivity"
             android:exported="false"
             android:label="@string/activity_search" />
 
         <activity
-            android:name=".AboutActivity"
+            android:name="com.madsam.neoiconpack.AboutActivity"
             android:exported="false"
             android:label="@string/activity_about" />
 
         <activity
-            android:name=".ReqStatsActivity"
+            android:name="com.madsam.neoiconpack.ReqStatsActivity"
             android:exported="false"
             android:label="@string/activity_req_stats"
             android:theme="@style/AppThemeDarkConsole"
