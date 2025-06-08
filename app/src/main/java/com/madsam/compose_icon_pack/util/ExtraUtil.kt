@@ -16,24 +16,29 @@
 
 package com.madsam.compose_icon_pack.util
 
+import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.Icon
 import android.media.MediaScannerConnection
 import android.net.ConnectivityManager
-import android.net.Uri
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Environment
-import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
+import androidx.core.content.edit
 import androidx.core.graphics.createBitmap
+import androidx.core.net.toUri
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -58,7 +63,7 @@ object ExtraUtil {
         if (TextUtils.isEmpty(text)) {
             return arrayOf("")
         }
-        return arrayOf(text!!.toLowerCase(Locale.ROOT))
+        return arrayOf(text!!.lowercase(Locale.ROOT))
     }
 
     /**
@@ -70,7 +75,7 @@ object ExtraUtil {
         }
 
         return Array(textArr.size) { i ->
-            textArr[i].toLowerCase(Locale.ROOT)
+            textArr[i].lowercase(Locale.ROOT)
         }
     }
 
@@ -82,6 +87,7 @@ object ExtraUtil {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
             packageInfo.longVersionCode
         } catch (e: PackageManager.NameNotFoundException) {
+            Log.e(C.LOG_TAG, "getAppVersionCode() failed: ${e.message}")
             0L
         }
     }
@@ -96,15 +102,9 @@ object ExtraUtil {
         if (context == null || text == null) {
             return
         }
-
-        if (C.SDK >= 11) {
-            val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clipData = ClipData.newPlainText(null, text)
-            clipboardManager.setPrimaryClip(clipData)
-        } else {
-            val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.text.ClipboardManager
-            clipboardManager.text = text
-        }
+        val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText(null, text)
+        clipboardManager.setPrimaryClip(clipData)
     }
 
     fun codeAppName(name: String?): String {
@@ -115,16 +115,27 @@ object ExtraUtil {
         if (processedName.isEmpty()) {
             return ""
         }
-        // Not "[A-Za-z][A-Za-z\\d'\\+-\\. _]*"
-        if (!processedName.matches(Regex("[A-Za-z][A-Za-z\\d'\\+\\-\\. _]*"))) {
+
+        if (!processedName.matches(Regex("[A-Za-z][A-Za-z\\d'+\\-. _]*"))) {
             return ""
         }
+
         val matcher = codePattern.matcher(processedName)
+        val sb = StringBuilder(processedName)
+        var offset = 0
+
         while (matcher.find()) {
-            processedName = processedName.replace(matcher.group(0),
-                "${matcher.group(0)[0]}_${matcher.group(0)[1]}")
+            val matchStr = matcher.group(0)
+            val matchPos = matcher.start()
+            if (matchStr != null && matchStr.length >= 2) {
+                sb.replace(matchPos + offset, matchPos + matchStr.length + offset,
+                    "${matchStr[0]}_${matchStr[1]}")
+                offset += 1
+            }
         }
-        return processedName.toLowerCase()
+
+        return sb.toString()
+            .lowercase(Locale.ROOT)
             .replace("'", "")
             .replace("\\+".toRegex(), "_plus")
             .replace("[-. ]".toRegex(), "_")
@@ -136,11 +147,9 @@ object ExtraUtil {
             return false
         }
 
-        // 处理不同类型的 Drawable
         val bitmap = when (drawable) {
             is BitmapDrawable -> drawable.bitmap
             else -> {
-                // 将任何类型的 Drawable 转换为 Bitmap
                 try {
                     val width = if (drawable.intrinsicWidth > 0) drawable.intrinsicWidth else 192
                     val height = if (drawable.intrinsicHeight > 0) drawable.intrinsicHeight else 192
@@ -157,12 +166,10 @@ object ExtraUtil {
             }
         }
 
-        // 创建保存路径
         val picDir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Icons")
         picDir.mkdirs()
         val targetFile = File(picDir, "ic_${name}_${bitmap.byteCount}.png")
 
-        // 保存图像
         var result = false
         var outputStream: OutputStream? = null
         try {
@@ -185,40 +192,31 @@ object ExtraUtil {
             return false
         }
 
-        record2Gallery(context, targetFile, false)
+        record2Gallery(context, targetFile)
         return true
     }
 
     /**
      * 记录新增图片文件到媒体库，这样可迅速在系统图库看到
      *
-     * @param context
-     * @param newlyPicFile
-     * @return
+     * @param context 上下文
+     * @param picFile 图片文件
+     * @return 是否成功通知媒体库
      */
-    private fun record2Gallery(context: Context, newlyPicFile: File?, allInDir: Boolean): Boolean {
-        if (context == null || newlyPicFile == null || !newlyPicFile.exists()) {
+    private fun record2Gallery(context: Context, picFile: File?): Boolean {
+        if (picFile == null || !picFile.exists()) {
             return false
         }
 
-        Log.d(C.LOG_TAG, "record2Gallery(): $newlyPicFile, $allInDir")
+        Log.d(C.LOG_TAG, "record2Gallery(): $picFile")
 
-        if (C.SDK >= 19) {
-            val filePaths = if (allInDir) {
-                newlyPicFile.parentFile?.list() ?: return false
-            } else {
-                arrayOf(newlyPicFile.path)
-            }
-            MediaScannerConnection.scanFile(context, filePaths, null, null)
-        } else {
-            if (allInDir) {
-                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_MOUNTED,
-                    Uri.fromFile(newlyPicFile.parentFile)))
-            } else {
-                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
-                    Uri.fromFile(newlyPicFile)))
-            }
-        }
+        // 始终使用 MediaScannerConnection，更可靠且兼容性更好
+        MediaScannerConnection.scanFile(
+            context,
+            arrayOf(picFile.absolutePath),
+            arrayOf("image/png"),  // 指定 MIME 类型提高扫描精确度
+            null
+        )
 
         return true
     }
@@ -250,43 +248,54 @@ object ExtraUtil {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             ?: return false
 
-        val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
 
-        var isConnected = networkInfo.isAvailable
+        val hasInternet = capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+                capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+
+        if (!hasInternet) return false
+
         if (isWifiOnly) {
-            isConnected = isConnected && networkInfo.type == ConnectivityManager.TYPE_WIFI
+            return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
         }
 
-        return isConnected
+        return true
     }
 
     fun isNetworkConnected(context: Context?): Boolean {
         return isNetworkConnected(context, false)
     }
 
+    /**
+     * 获取设备标识符，遵循现代 Android 隐私实践
+     *
+     * @param context 应用上下文
+     * @return 设备标识符字符串
+     */
     fun getDeviceId(context: Context): String {
-        val androidId = Settings.Secure.getString(
-            context.contentResolver,
-            Settings.Secure.ANDROID_ID
-        )
+        // 首选方案：使用安装ID - 这个ID在应用卸载重装后会改变
+        val installationID = getOrCreateInstallationId(context)
 
-        if (!TextUtils.isEmpty(androidId)) {
-            val serial = Build.SERIAL
-            if ("unknown".equals(serial, ignoreCase = true).not()) {
-                return androidId + serial
-            }
-            return androidId
+        // 结合使用其他信息来增强唯一性
+        val deviceInfo = Build.MANUFACTURER + Build.MODEL
+
+        return "$installationID:$deviceInfo"
+    }
+
+    /**
+     * 获取或创建应用安装ID
+     */
+    private fun getOrCreateInstallationId(context: Context): String {
+        val sharedPrefs = context.getSharedPreferences("app_installation", Context.MODE_PRIVATE)
+        var installationId = sharedPrefs.getString("installation_id", null)
+
+        if (installationId == null) {
+            installationId = UUID.randomUUID().toString()
+            sharedPrefs.edit { putString("installation_id", installationId) }
         }
 
-        val file = File(context.filesDir, "deviceId")
-        file.mkdir()
-        val files = file.listFiles()
-        if (files?.isNotEmpty() == true) {
-            return files[0].name
-        }
-        val id = UUID.randomUUID().toString()
-        File(file, id).mkdir()
-        return id
+        return installationId
     }
 
     fun gotoMarket(context: Context?, pkgName: String?, viaBrowser: Boolean) {
@@ -295,13 +304,13 @@ object ExtraUtil {
         }
 
         // https://play.google.com/store/apps/details?id=%s
-        val LINK = String.format(
+        val link = String.format(
             if (viaBrowser) "http://www.coolapk.com/apk/%s" else "market://details?id=%s",
             pkgName
         )
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(LINK)
+        intent.data = link.toUri()
 
         try {
             context.startActivity(intent)
@@ -344,20 +353,33 @@ object ExtraUtil {
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         shortcutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 
-        val ACTION_ADD_SHORTCUT = "com.android.launcher.action.INSTALL_SHORTCUT"
+        // 使用 ShortcutManager API
+        val shortcutManager = context.getSystemService(ShortcutManager::class.java)
+        if (shortcutManager != null && shortcutManager.isRequestPinShortcutSupported) {
+            val shortcutId = "$pkgName:$launcherName"
+            val icon = Icon.createWithResource(context, iconId)
 
-        val addIntent = Intent()
-        addIntent.action = ACTION_ADD_SHORTCUT
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcutIntent)
-        addIntent.putExtra(Intent.EXTRA_SHORTCUT_NAME, appName)
-        addIntent.putExtra(
-            Intent.EXTRA_SHORTCUT_ICON_RESOURCE,
-            Intent.ShortcutIconResource.fromContext(context, iconId)
-        )
-        addIntent.putExtra("duplicate", false)
-        context.sendBroadcast(addIntent)
+            val pinShortcutInfo = ShortcutInfo.Builder(context, shortcutId)
+                .setIntent(shortcutIntent)
+                .setShortLabel(appName!!)
+                .setIcon(icon)
+                .build()
 
-        return true
+            val pinnedShortcutCallbackIntent = shortcutManager.createShortcutResultIntent(
+                pinShortcutInfo
+            )
+
+            val successCallback = PendingIntent.getBroadcast(
+                context, 0,
+                pinnedShortcutCallbackIntent, PendingIntent.FLAG_IMMUTABLE
+            )
+
+            return shortcutManager.requestPinShortcut(
+                pinShortcutInfo,
+                successCallback.intentSender
+            )
+        }
+        return false
     }
 
     fun purifyIconName(iconName: String?): String {

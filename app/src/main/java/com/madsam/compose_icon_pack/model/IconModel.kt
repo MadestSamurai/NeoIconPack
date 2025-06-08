@@ -4,5 +4,6 @@ data class IconModel(
     val iconId: Int,
     val label: String,
     val fullResName: String = "",
-    val packageName: String = ""
+    val packageName: String = "",
+    val launcherName: String = ""
 )
