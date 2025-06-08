@@ -396,6 +396,10 @@
         drawable="baidu_wenku" />
 
     <item
+        component="ComponentInfo{com.bandcamp.android/com.bandcamp.android.view.SplashActivity}"
+        drawable="bandcamp" />
+
+    <item
         component="ComponentInfo{com.mybank.android.phone/com.mybank.android.phone.MainActivity}"
         drawable="bank_my" />
 

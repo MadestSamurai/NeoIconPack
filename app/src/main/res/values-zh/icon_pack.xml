@@ -20,7 +20,10 @@
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
     <!-- Just KEEP IT EMPTY BUT DO NOT DELETE IT if you do not want to collect app name list. -->
     <string-array name="icon_labels">
-        <!--<item>日历</item>-->
+        <item>支付宝</item>
+        <item>AcFun</item>
+        <item>软件商店(Oppo)</item>
+        <item>Bandcamp</item>
     </string-array>
 
 </resources>
