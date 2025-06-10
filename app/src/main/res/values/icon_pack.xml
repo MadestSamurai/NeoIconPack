@@ -24,6 +24,9 @@
         <item>acfun</item>
         <item>app_market_oppo</item>
         <item>bandcamp</item>
+        <item>binance</item>
+        <item>black_player_ex</item>
+        <item>bloons_td_6</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -33,6 +36,9 @@
         <item>AcFun</item>
         <item>App Market Oppo</item>
         <item>Bandcamp</item>
+        <item>Binance</item>
+        <item>Black Player EX</item>
+        <item>Bloons TD 6</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

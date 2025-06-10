@@ -426,6 +426,18 @@
         drawable="bilibili_blue" />
 
     <item
+        component="ComponentInfo{com.binance.dev/com.eaas.launcher.activities.main.MainActivity}"
+        drawable="binance" />
+
+    <item
+        component="ComponentInfo{com.kodarkooperativet.blackplayerex/com.kodarkooperativet.blackplayerex.activities.ViewPagerActivity}"
+        drawable="black_player_ex" />
+
+    <item
+        component="ComponentInfo{com.ninjakiwi.bloonstd6epic/com.unity3d.player.UnityPlayerActivity}"
+        drawable="bloons_td_6" />
+
+    <item
         component="ComponentInfo{com.beastbike.bluegogo/com.beastbike.bluegogo.activity.BGSplashActivity}"
         drawable="blue_gogo" />
     <item
