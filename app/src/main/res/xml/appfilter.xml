@@ -468,6 +468,14 @@
         drawable="brain_music" />
 
     <item
+        component="ComponentInfo{com.heytap.speechassist/com.heytap.speechassist.launcher.SpeechAssistMainActivity}"
+        drawable="breeno" />
+
+    <item
+        component="ComponentInfo{com.coloros.shortcuts/com.coloros.shortcuts.ui.MainActivity}"
+        drawable="breeno_shortcuts" />
+
+    <item
         component="ComponentInfo{com.iwoll.weather/com.iwoll.weather.activity.SplashActivity}"
         drawable="breeze" />
     <item
@@ -523,6 +531,10 @@
     <item
         component="ComponentInfo{org.lineageos.jelly/org.lineageos.jelly.MainActivity}"
         drawable="browser" />
+
+    <item
+        component="ComponentInfo{com.netease.buff/com.netease.buff.entry.launcher.icon1500}"
+        drawable="buff" />
 
     <item
         component="ComponentInfo{stericson.busybox.donate/stericson.busybox.donate.activities.MainActivity}"
@@ -802,6 +814,10 @@
     <item
         component="ComponentInfo{com.kascend.chushou/com.kascend.chushou.ChuShouTV_}"
         drawable="chushou_tv" />
+
+    <item
+        component="ComponentInfo{com.github.kr328.clash.foss/com.github.kr328.clash.MainActivity}"
+        drawable="clash" />
 
     <item
         component="ComponentInfo{com.supercell.clashofclans.ewan.leshi/cn.ewan.supersdk.activity.SplashActivity}"

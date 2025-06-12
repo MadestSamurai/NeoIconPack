@@ -27,6 +27,10 @@
         <item>binance</item>
         <item>black_player_ex</item>
         <item>bloons_td_6</item>
+        <item>breeno</item>
+        <item>breeno_shortcuts</item>
+        <item>buff</item>
+        <item>clash</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -39,6 +43,10 @@
         <item>Binance</item>
         <item>Black Player EX</item>
         <item>Bloons TD 6</item>
+        <item>Breeno</item>
+        <item>Breeno Shortcuts</item>
+        <item>Buff</item>
+        <item>Clash</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
