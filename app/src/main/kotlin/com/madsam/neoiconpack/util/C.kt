@@ -19,7 +19,7 @@ package com.madsam.neoiconpack.util
  * Created by By_syk on 2016-07-16.
  */
 object C {
-    const val LOG_TAG: String = "NANO_ICON_PACK"
+    const val LOG_TAG: String = "NEO_ICON_PACK"
     const val ICONS_COUNT = 100 // 替换为您图标包的实际图标数量
     const val REQ_REDRAW_PREFIX: String = "\uD83D\uDC64 "
 }
