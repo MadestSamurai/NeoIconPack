@@ -31,6 +31,7 @@
         <item>breeno_shortcuts</item>
         <item>buff</item>
         <item>clash</item>
+        <item>wechat</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -47,6 +48,7 @@
         <item>Breeno Shortcuts</item>
         <item>Buff</item>
         <item>Clash</item>
+        <item>WeChat</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
