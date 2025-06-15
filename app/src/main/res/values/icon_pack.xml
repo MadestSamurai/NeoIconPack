@@ -32,6 +32,19 @@
         <item>buff</item>
         <item>clash</item>
         <item>wechat</item>
+        <item>netease_music</item>
+        <item>qq_music</item>
+        <item>soundcloud</item>
+        <item>dizzylab</item>
+        <item>streetvoice</item>
+        <item>spotify</item>
+        <item>youtube</item>
+        <item>bilibili</item>
+        <item>twitch</item>
+        <item>mx_player</item>
+        <item>huya</item>
+        <item>niconico</item>
+        <item>douyu</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -49,6 +62,19 @@
         <item>Buff</item>
         <item>Clash</item>
         <item>WeChat</item>
+        <item>NetEase Music</item>
+        <item>QQ Music</item>
+        <item>SoundCloud</item>
+        <item>dizzylab</item>
+        <item>Street Voice</item>
+        <item>Spotify</item>
+        <item>YouTube</item>
+        <item>Bilibili</item>
+        <item>Twitch</item>
+        <item>MX Player</item>
+        <item>Huya</item>
+        <item>Niconico Video</item>
+        <item>Douyu</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

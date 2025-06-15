@@ -1016,12 +1016,16 @@
         drawable="disk115" />
 
     <item
+        component="ComponentInfo{com.cnsouka.dizzwalkman.beta/com.dizzwalkman.MainActivity}"
+        drawable="dizzylab" />
+
+    <item
         component="ComponentInfo{com.dmzj.manhua/com.dmzj.manhua.ui.LaunchInterceptorActivity}"
         drawable="dmzj" />
 
     <item
         component="ComponentInfo{com.duowan.kiwi/com.duowan.kiwi.simpleactivity.SplashActivity}"
-        drawable="duowan_kiwi" />
+        drawable="huya" />
 
     <item
         component="ComponentInfo{com.google.earth/com.google.android.apps.earth.EarthActivity}"
@@ -1581,10 +1585,9 @@
     <item
         component="ComponentInfo{com.mxtech.videoplayer.beta/com.mxtech.videoplayer.beta.ActivityMediaList}"
         drawable="mx_player" />
-
     <item
-        component="ComponentInfo{com.mxtech.videoplayer.pro/com.mxtech.videoplayer.pro.ActivityMediaList}"
-        drawable="mx_player_pro" />
+        component="ComponentInfo{com.mxtech.videoplayer.pro/com.mxtech.videoplayer.pro.ActivityWelcomeMX}"
+        drawable="mx_player" />
 
     <item
         component="ComponentInfo{com.wangdaye.mysplash/com.wangdaye.mysplash.main.view.activity.MainActivity}"
@@ -1608,6 +1611,10 @@
     <item
         component="ComponentInfo{com.netease.yanxuan/com.netease.yanxuan.module.splash.activity.SplashActivity}"
         drawable="netease_yanxuan" />
+
+    <item
+        component="ComponentInfo{com.netease.cloudmusic/com.netease.cloudmusic.activity.IconChangeDefaultAlias}"
+        drawable="netease_music" />
 
     <item
         component="ComponentInfo{com.cl.newt66y/com.cl.newt66y.MainActivity}"
@@ -1814,13 +1821,13 @@
 
     <item
         component="ComponentInfo{air.tv.douyu.android/tv.douyu.view.activity.SplashActivity}"
-        drawable="douyu_tv" />
+        drawable="douyu" />
     <item
         component="ComponentInfo{air.tv.douyu.android/tv.douyu.view.activity.MainActivity}"
-        drawable="douyu_tv" />
+        drawable="douyu" />
     <item
         component="ComponentInfo{tv.douyu/tv.douyu.control.activity.SplashActivity}"
-        drawable="douyu_tv" />
+        drawable="douyu" />
 
     <item
         component="ComponentInfo{com.android.providers.downloads.ui/com.android.providers.downloads.ui.DownloadList}"
@@ -2672,6 +2679,10 @@
     <item
         component="ComponentInfo{com.netease.newsreader.activity/com.netease.nr.phone.main.MainActivity}"
         drawable="netease_news" />
+
+    <item
+        component="ComponentInfo{jp.nicovideo.android/jp.nicovideo.android.StartupActivity}"
+        drawable="niconico" />
 
     <item
         component="ComponentInfo{com.samsung.android.app.memo/com.samsung.android.app.memo.Main}"
@@ -3677,6 +3688,10 @@
         drawable="soul_knight" />
 
     <item
+        component="ComponentInfo{com.spotify.music/com.spotify.music.MainActivity}"
+        drawable="spotify" />
+
+    <item
         component="ComponentInfo{com.chaozhuo.browser_phone/org.chromium.chrome.shell.ui.SplashActivity}"
         drawable="stardust" />
     <item
@@ -4002,6 +4017,10 @@
         drawable="sorcery" />
 
     <item
+        component="ComponentInfo{com.soundcloud.android/com.soundcloud.android.launcher.LauncherActivity}"
+        drawable="soundcloud" />
+
+    <item
         component="ComponentInfo{org.zwanoo.android.speedtest/com.ookla.speedtest.softfacade.MainActivity}"
         drawable="speed_test" />
 
@@ -4042,6 +4061,10 @@
     <item
         component="ComponentInfo{com.android.stk/com.android.stk.StkLauncherActivityII}"
         drawable="stk" />
+
+    <item
+        component="ComponentInfo{com.streetvoice.streetvoice.cn/com.streetvoice.streetvoice.view.SplashActivity}"
+        drawable="streetvoice" />
 
     <item
         component="ComponentInfo{eu.chainfire.supersu/eu.chainfire.supersu.MainActivity-Emblem}"
@@ -4222,6 +4245,10 @@
     <item
         component="ComponentInfo{com.tumblr/com.tumblr.ui.activity.JumpoffActivity}"
         drawable="tumblr" />
+
+    <item
+        component="ComponentInfo{tv.twitch.android.app/tv.twitch.android.app.core.LandingActivity}"
+        drawable="twitch" />
 
     <item
         component="ComponentInfo{com.twitter.android/com.twitter.android.StartActivity}"

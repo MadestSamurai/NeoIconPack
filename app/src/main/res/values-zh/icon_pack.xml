@@ -32,6 +32,19 @@
         <item>网易BUFF</item>
         <item>Clash</item>
         <item>微信</item>
+        <item>网易云音乐</item>
+        <item>QQ音乐</item>
+        <item>SoundCloud</item>
+        <item>dizzylab</item>
+        <item>街声</item>
+        <item>Spotify</item>
+        <item>YouTube</item>
+        <item>哔哩哔哩</item>
+        <item>Twitch</item>
+        <item>MX播放器</item>
+        <item>虎牙</item>
+        <item>ニコニコ動画</item>
+        <item>斗鱼</item>
     </string-array>
 
 </resources>
