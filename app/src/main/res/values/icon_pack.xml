@@ -45,6 +45,8 @@
         <item>huya</item>
         <item>niconico</item>
         <item>douyu</item>
+        <item>taobao</item>
+        <item>tmall</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -75,6 +77,8 @@
         <item>Huya</item>
         <item>Niconico Video</item>
         <item>Douyu</item>
+        <item>Taobao</item>
+        <item>Tmall</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
