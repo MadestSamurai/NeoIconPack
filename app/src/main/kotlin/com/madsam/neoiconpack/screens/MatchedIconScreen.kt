@@ -49,6 +49,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
@@ -182,7 +183,7 @@ fun MatchedIconsScreen(
                     }
                 } else {
                     LazyVerticalGrid(
-                        columns = GridCells.Adaptive(minSize = 80.dp),
+                        columns = GridCells.Adaptive(minSize = 72.dp),
                         contentPadding = PaddingValues(8.dp),
                         horizontalArrangement = Arrangement.spacedBy(4.dp),
                         verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -211,7 +212,10 @@ fun MatchedIconsScreen(
                                 }
                                 Text(
                                     text = icon.label,
-                                    maxLines = 1,
+                                    fontSize = 12.sp,
+                                    maxLines = 2,
+                                    lineHeight = 14.sp,
+                                    textAlign = TextAlign.Center,
                                     modifier = Modifier.padding(horizontal = 4.dp)
                                 )
                             }

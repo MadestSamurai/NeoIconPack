@@ -47,6 +47,17 @@
         <item>douyu</item>
         <item>taobao</item>
         <item>tmall</item>
+        <item>jd</item>
+        <item>rt_mart</item>
+        <item>xianyu</item>
+        <item>meituan</item>
+        <item>yanxuan</item>
+        <item>weidian</item>
+        <item>dianping</item>
+        <item>pinduoduo</item>
+        <item>hema</item>
+        <item>alibaba</item>
+        <item>qq</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -79,6 +90,17 @@
         <item>Douyu</item>
         <item>Taobao</item>
         <item>Tmall</item>
+        <item>JD</item>
+        <item>RT Mart</item>
+        <item>Idle Fish</item>
+        <item>Meituan</item>
+        <item>Yanxuan</item>
+        <item>Weidian</item>
+        <item>Dianping</item>
+        <item>Pinduoduo</item>
+        <item>Hippo</item>
+        <item>Alibaba</item>
+        <item>QQ</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

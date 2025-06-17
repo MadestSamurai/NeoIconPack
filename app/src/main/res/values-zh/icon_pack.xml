@@ -47,6 +47,17 @@
         <item>斗鱼</item>
         <item>淘宝</item>
         <item>天猫</item>
+        <item>京东</item>
+        <item>大润发</item>
+        <item>闲鱼</item>
+        <item>美团</item>
+        <item>网易严选</item>
+        <item>微店</item>
+        <item>大众点评</item>
+        <item>拼多多</item>
+        <item>盒马</item>
+        <item>阿里巴巴</item>
+        <item>QQ</item>
     </string-array>
 
 </resources>

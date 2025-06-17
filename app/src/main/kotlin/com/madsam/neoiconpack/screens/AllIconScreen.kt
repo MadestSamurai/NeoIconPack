@@ -36,7 +36,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.madsam.neoiconpack.model.IconModel
 import com.madsam.neoiconpack.util.AllIconsGetter
 
@@ -105,7 +107,7 @@ fun AllIconsScreen(
     ) { paddingValues ->
         if (icons.isNotEmpty()) {
             LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 80.dp),
+                columns = GridCells.Adaptive(minSize = 72.dp),
                 contentPadding = PaddingValues(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -133,7 +135,10 @@ fun AllIconsScreen(
                         }
                         Text(
                             text = icon.label,
-                            maxLines = 1
+                            fontSize = 12.sp,
+                            maxLines = 2,
+                            lineHeight = 14.sp,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }

@@ -17,16 +17,9 @@
 
 <!-- For Nova, Apex, ADW, Smart, Action 3 -->
 <resources>
-
-    <!--<iconback
-        img1="iconback" />
-    <iconmask
-        img1="iconmask" />
-    <iconupon
-        img1="iconupon" />
-    <scale
-        factor="0.6" />-->
-
+    <iconback img="icon_back"/>
+    <iconmask img="icon_mask"/>
+    <scale factor="1.25" />
     <!-- Just for Nova -->
     <item
         component=":LAUNCHER_ACTION_APP_DRAWER"
@@ -153,6 +146,10 @@
     <item
         component="ComponentInfo{com.eg.android.AlipayGphone/com.eg.android.AlipayGphone.AlipayLogin}"
         drawable="alipay" />
+
+    <item
+        component="ComponentInfo{com.alibaba.wireless/com.alibaba.wireless.launch.LauncherActivity}"
+        drawable="alibaba" />
 
     <item
         component="ComponentInfo{com.autonavi.minimap/com.autonavi.map.activity.SplashActivity}"
@@ -984,6 +981,9 @@
     <item
         component="ComponentInfo{com.dianping.v1/com.dianping.main.permission.PermissionActivity}"
         drawable="dianping" />
+    <item
+        component="ComponentInfo{com.dianping.v1/com.dianping.v1.NovaMainActivity}"
+        drawable="dianping" />
 
     <item
         component="ComponentInfo{com.diguayouxi/com.diguayouxi.ui.FirstActivity}"
@@ -1270,6 +1270,10 @@
     <item
         component="ComponentInfo{com.blizzard.wtcg.hearthstone/com.blizzard.wtcg.hearthstone.HearthstoneNativeActivity}"
         drawable="hearth_stone" />
+
+    <item
+        component="ComponentInfo{com.wudaokou.hippo/com.wudaokou.hippo.launcher.splash.SplashActivity}"
+        drawable="hema" />
 
     <item
         component="ComponentInfo{com.hitokoto/com.hitokoto.activity.MainActivity}"
@@ -2910,6 +2914,10 @@
         drawable="perfect_color_bar" />
 
     <item
+        component="ComponentInfo{com.xunmeng.pinduoduo/com.xunmeng.pinduoduo.ui.activity.MainFrameActivity}"
+        drawable="pinduoduo" />
+
+    <item
         component="ComponentInfo{com.android.phone/com.android.phone.DialtactsContactsEntryActivity}"
         drawable="phone" />
     <item
@@ -3432,6 +3440,10 @@
     <item
         component="ComponentInfo{com.zhongduomei.rrmj.society/com.zhongduomei.rrmj.society.ui.AppSplashActivity}"
         drawable="rrmj_society" />
+
+    <item
+        component="ComponentInfo{com.rt.market.fresh/com.rt.market.fresh.welcome.activity.WelcomeActivity}"
+        drawable="rt_mart" />
 
     <item
         component="ComponentInfo{com.samsung.android.app.sreminder/com.samsung.android.app.sreminder.phone.cardlist.SReminderActivity}"
@@ -4465,6 +4477,10 @@
         drawable="weico" />
 
     <item
+        component="ComponentInfo{com.koudai.weidian.buyer/com.koudai.weidian.buyer.activity.WDInitActivity}"
+        drawable="weidian" />
+
+    <item
         component="ComponentInfo{com.sxy.ui/com.sxy.ui.view.MainActivity}"
         drawable="welike" />
 
@@ -4536,6 +4552,10 @@
     <item
         component="ComponentInfo{com.xda.labs/com.xda.labs.LabsLauncher}"
         drawable="xda_labs" />
+
+    <item
+        component="ComponentInfo{com.taobao.idlefish/com.taobao.fleamarket.home.activity.InitActivity}"
+        drawable="xianyu" />
 
     <item
         component="ComponentInfo{cn.xiaochuankeji.tieba/cn.xiaochuankeji.tieba.ui.base.SplashActivity}"
@@ -4659,6 +4679,10 @@
     <item
         component="ComponentInfo{com.yandex.browser/com.yandex.browser.YandexBrowserActivity}"
         drawable="yandex_browser" />
+
+    <item
+        component="ComponentInfo{com.netease.yanxuan/com.netease.yanxuan.SplashActivityDefault}"
+        drawable="yanxuan" />
 
     <item
         component="ComponentInfo{com.hipu.yidian/com.yidian.news.ui.guide.UserGuideActivity}"

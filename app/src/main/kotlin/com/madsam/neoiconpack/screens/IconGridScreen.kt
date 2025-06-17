@@ -19,8 +19,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.madsam.neoiconpack.bean.IconBean
 
 @Composable
@@ -51,7 +51,7 @@ fun IconGridScreen(
         }
     } else {
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 80.dp),
+            columns = GridCells.Adaptive(minSize = 72.dp),
             contentPadding = PaddingValues(8.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
@@ -93,12 +93,12 @@ fun IconGridItem(
             )
         }
 
-        // 根据gridItemMode显示或隐藏标签
         if (gridItemMode != 0) {
             Text(
                 text = icon.label ?: "",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                fontSize = 12.sp,
+                maxLines = 2,
+                lineHeight = 14.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(horizontal = 4.dp, vertical = 2.dp)
             )
