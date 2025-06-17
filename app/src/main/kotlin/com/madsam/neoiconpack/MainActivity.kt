@@ -45,7 +45,6 @@ class MainActivity : ComponentActivity() {
         preferences = AppPreferences(this)
         enableStatsModule = resources.getBoolean(R.bool.enable_req_stats_module)
 
-        // 使用lifecycleScope而不是在Compose中使用协程
         setContent {
             ComposeIconPackTheme {
                 MainScreen(

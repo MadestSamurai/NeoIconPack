@@ -147,7 +147,7 @@ fun AboutScreen(onBackPressed: () -> Unit) {
 
             // 开源信息
             InfoCard(title = "开源信息") {
-                InfoRow(label = "项目主页", value = "https://github.com/MadestSamurai/Compose-Icon-Pack")
+                InfoRow(label = "项目主页", value = "https://github.com/MadestSamurai/NeoIconPack")
                 InfoRow(label = "许可协议", value = "Apache License 2.0")
             }
 
