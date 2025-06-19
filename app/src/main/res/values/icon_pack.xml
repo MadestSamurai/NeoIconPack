@@ -63,6 +63,13 @@
         <item>gallery</item>
         <item>hltv</item>
         <item>via</item>
+        <item>sms</item>
+        <item>camera</item>
+        <item>twitter</item>
+        <item>youtube_music</item>
+        <item>instagram</item>
+        <item>play_store</item>
+        <item>baidu_tieba</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -111,6 +118,13 @@
         <item>Photos</item>
         <item>HLTV</item>
         <item>VIA</item>
+        <item>Messages</item>
+        <item>Camera</item>
+        <item>X</item>
+        <item>Youtube Music</item>
+        <item>Instagram</item>
+        <item>Play Store</item>
+        <item>Baidu Tieba</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
