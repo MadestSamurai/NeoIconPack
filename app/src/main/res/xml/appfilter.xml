@@ -1992,6 +1992,27 @@
         component="ComponentInfo{com.coloros.filemanager/com.coloros.filemanager.Main}"
         drawable="files" />
     <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filemanager.main.ui.MainActivity}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filemanager.FileManagerApplication}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filemanager.main.ui.QuickDocumentActivity}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filemanager.main.ui.QuickDocumentActivity_user_skill}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filemanager.category.document.ui.DocumentActivity}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.oplus.filebrowser.FileBrowserActivity}"
+        drawable="files" />
+    <item
+        component="ComponentInfo{com.coloros.filemanager/com.filemanager.recyclebin.ui.RecycleBinActivity}"
+        drawable="files" />
+    <item
         component="ComponentInfo{com.cyanogenmod.filemanager/com.cyanogenmod.filemanager.activities.NavigationActivity}"
         drawable="files" />
     <item
@@ -2249,6 +2270,21 @@
         drawable="gallery" />
     <item
         component="ComponentInfo{com.zui.gallery/com.zui.gallery.app.GalleryActivity}"
+        drawable="gallery" />
+    <item
+        component="ComponentInfo{org.mokee.venus/com.android.gallery3d.app.GalleryActivity}"
+        drawable="gallery" />
+    <item
+        component="ComponentInfo{com.coloros.gallery3d/com.coloros.gallery3d.app.MainActivity}"
+        drawable="gallery" />
+    <item
+        component="ComponentInfo{org.mokee.venus/com.android.gallery3d.app.GalleryActivity}"
+        drawable="gallery" />
+    <item
+        component="ComponentInfo{org.mokee.venus/com.android.gallery3d.app.GalleryActivity}"
+        drawable="gallery" />
+    <item
+        component="ComponentInfo{org.mokee.venus/com.android.gallery3d.app.GalleryActivity}"
         drawable="gallery" />
     <item
         component="ComponentInfo{org.mokee.venus/com.android.gallery3d.app.GalleryActivity}"
@@ -3810,6 +3846,10 @@
     <item
         component="ComponentInfo{xsky.txvpn/com.insthub.txvpn.activity.SplashActivity}"
         drawable="tx_vpn" />
+
+    <item
+        component="ComponentInfo{mark.via.gp/mark.via.Shell}"
+        drawable="via" />
 
     <item
         component="ComponentInfo{com.achievo.vipshop/com.achievo.vipshop.activity.LodingActivity}"
