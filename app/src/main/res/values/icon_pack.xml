@@ -58,6 +58,7 @@
         <item>hema</item>
         <item>alibaba</item>
         <item>qq</item>
+        <item>wecom</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -101,6 +102,7 @@
         <item>Hippo</item>
         <item>Alibaba</item>
         <item>QQ</item>
+        <item>WeCom</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

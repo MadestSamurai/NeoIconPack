@@ -3868,6 +3868,31 @@
         drawable="wandoujia" />
 
     <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.launch.WwApplication}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.launch.LaunchSplashActivity}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.launch.LaunchSplashGovActivity}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.launch.LaunchSplashEduActivity}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.LaunchSplashActivityEdu}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.LaunchSplashActivityGov}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.LaunchSplashActivityNormal}"
+        drawable="wecom" />
+    <item
+        component="ComponentInfo{com.tencent.wework/com.tencent.wework.LaunchSplashActivityGov}"
+        drawable="wecom" />
+
+    <item
         component="ComponentInfo{com.sonymobile.entrance/com.sonymobile.entrance.EntranceActivity}"
         drawable="whats_new" />
 
