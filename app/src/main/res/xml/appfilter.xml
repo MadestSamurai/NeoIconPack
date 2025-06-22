@@ -95,6 +95,10 @@
         drawable="abc_bank" />
 
     <item
+        component="ComponentInfo{com.Lilith.Abi/com.lilithgame.abi.UnityPlayerActivity}"
+        drawable="abi" />
+
+    <item
         component="ComponentInfo{tv.acfundanmaku.video/tv.acfun.core.module.splash.SplashActivity}"
         drawable="acfun" />
 
@@ -126,6 +130,10 @@
         drawable="aegis" />
 
     <item
+        component="ComponentInfo{net.afdian.afdian/net.afdian.afdian.activity.InitialActivity}"
+        drawable="aifadian" />
+
+    <item
         component="ComponentInfo{com.sand.airdroid/com.sand.airdroid.Splash}"
         drawable="air_droid" />
     <item
@@ -150,6 +158,10 @@
     <item
         component="ComponentInfo{com.alibaba.wireless/com.alibaba.wireless.launch.LauncherActivity}"
         drawable="alibaba" />
+
+    <item
+        component="ComponentInfo{com.alicloud.databox/com.alicloud.databox.launcher.splash.SplashActivity}"
+        drawable="ali_cloud" />
 
     <item
         component="ComponentInfo{com.autonavi.minimap/com.autonavi.map.activity.SplashActivity}"
@@ -292,6 +304,10 @@
         drawable="authenticator" />
 
     <item
+        component="ComponentInfo{com.azure.authenticator/com.azure.authenticator.ui.LaunchActivity}"
+        drawable="microsoft_authenticator" />
+
+    <item
         component="ComponentInfo{com.cubic.autohome/com.cubic.autohome.LogoActivity}"
         drawable="auto_home" />
 
@@ -402,6 +418,10 @@
     <item
         component="ComponentInfo{com.mybank.android.phone/com.mybank.android.phone.MainActivity}"
         drawable="bank_my" />
+
+    <item
+        component="ComponentInfo{com.chebada/com.chebada.main.splash.WelcomeActivity}"
+        drawable="bashiguanjia" />
 
     <item
         component="ComponentInfo{com.chinamworld.bocmbci/com.chinamworld.bocmbci.biz.DexActivity}"
@@ -531,6 +551,10 @@
     <item
         component="ComponentInfo{org.lineageos.jelly/org.lineageos.jelly.MainActivity}"
         drawable="browser" />
+
+    <item
+        component="ComponentInfo{com.heytap.browser/com.android.browser.BrowserActivity}"
+        drawable="heytap_browser" />
 
     <item
         component="ComponentInfo{com.netease.buff/com.netease.buff.entry.launcher.icon1500}"
@@ -4592,6 +4616,10 @@
     <item
         component="ComponentInfo{cn.wiz.note/com.qihoo.util.StartActivity}"
         drawable="wiz_note" />
+
+    <item
+        component="ComponentInfo{com.studioquare.wpcn.taptap/com.studioquare.wpactivity}"
+        drawable="wonderful_parade" />
 
     <item
         component="ComponentInfo{cn.wps.moffice_eng/cn.wps.moffice_eng.documentmanager.PreStartActivity}"

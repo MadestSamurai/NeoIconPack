@@ -70,6 +70,14 @@
         <item>instagram</item>
         <item>play_store</item>
         <item>baidu_tieba</item>
+        <item>adobe_acrobat</item>
+        <item>microsoft_authenticator</item>
+        <item>ali_cloud</item>
+        <item>heytap_browser</item>
+        <item>abi</item>
+        <item>aifadian</item>
+        <item>bashiguanjia</item>
+        <item>wonderful_parade</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -125,6 +133,14 @@
         <item>Instagram</item>
         <item>Play Store</item>
         <item>Baidu Tieba</item>
+        <item>Acrobat</item>
+        <item>Microsoft Authenticator</item>
+        <item>Ali Cloud</item>
+        <item>Browser(Heytap)</item>
+        <item>Abi</item>
+        <item>Afdian</item>
+        <item>Bashiguanjia</item>
+        <item>Wonderful Parade</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
