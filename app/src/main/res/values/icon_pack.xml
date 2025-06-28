@@ -78,6 +78,13 @@
         <item>aifadian</item>
         <item>bashiguanjia</item>
         <item>wonderful_parade</item>
+        <item>baidu_maps</item>
+        <item>baidu_netdisk</item>
+        <item>bilibili_manga</item>
+        <item>telegram</item>
+        <item>v2rayng</item>
+        <item>kfc</item>
+        <item>mcdonald</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -141,6 +148,13 @@
         <item>Afdian</item>
         <item>Bashiguanjia</item>
         <item>Wonderful Parade</item>
+        <item>Baidu Maps</item>
+        <item>Baidu Netdisk</item>
+        <item>Bilibili Comic</item>
+        <item>Telegram</item>
+        <item>v2rayNG</item>
+        <item>KFC</item>
+        <item>McDonald\'s</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

@@ -351,6 +351,9 @@
     <item
         component="ComponentInfo{com.baidu.BaiduMap/com.baidu.baidumaps.WelcomeScreen}"
         drawable="baidu_maps" />
+    <item
+        component="ComponentInfo{com.baidu.BaiduMap/com.baidu.baidumaps.WelcomeScreen.Alias0}"
+        drawable="baidu_maps" />
 
     <item
         component="ComponentInfo{com.baidu.netdisk/com.baidu.netdisk.ui.Navigate}"
@@ -366,6 +369,9 @@
         drawable="baidu_netdisk" />
     <item
         component="ComponentInfo{com.baidu.netdisk_ss/com.baidu.netdisk.ui.Navigate}"
+        drawable="baidu_netdisk" />
+    <item
+        component="ComponentInfo{com.baidu.netdisk/com.baidu.netdisk.ui.DefaultMainActivity}"
         drawable="baidu_netdisk" />
 
     <item
@@ -440,10 +446,17 @@
     <item
         component="ComponentInfo{tv.danmaku.bili/tv.danmaku.bili.ui.splash.SplashActivity}"
         drawable="bilibili" />
+    <item
+        component="ComponentInfo{tv.danmaku.bili/tv.danmaku.bili.MainActivityV2}"
+        drawable="bilibili" />
 
     <item
         component="ComponentInfo{com.bilibili.app.blue/tv.danmaku.bili.ui.splash.SplashActivity}"
         drawable="bilibili_blue" />
+
+    <item
+        component="ComponentInfo{com.bilibili.comic/com.bilibili.comic.splash.view.activity.SplashActivity}"
+        drawable="bilibili_manga" />
 
     <item
         component="ComponentInfo{com.binance.dev/com.eaas.launcher.activities.main.MainActivity}"
@@ -2488,6 +2501,10 @@
         drawable="goto_keep" />
 
     <item
+        component="ComponentInfo{com.yek.android.kfc.activitys/com.yum.brandkfc.SplashAct}"
+        drawable="kfc" />
+
+    <item
         component="ComponentInfo{com.kingroot.kinguser/com.kingroot.kinguser.activitys.SliderMainActivity}"
         drawable="kingroot" />
     <item
@@ -2541,6 +2558,10 @@
     <item
         component="ComponentInfo{com.android.vending.billing.InAppBillingService.LOCK/com.android.vending.billing.InAppBillingService.LOCK.MainActivity-5}"
         drawable="lucky_patcher" />
+
+    <item
+        component="ComponentInfo{com.mcdonalds.gma.cn/com.mcdonalds.gma.cn.activity.LaunchActivity}"
+        drawable="mcdonald" />
 
     <item
         component="ComponentInfo{com.z28j.feel/com.z28j.feel.HomeActivity}"
@@ -4384,6 +4405,10 @@
     <item
         component="ComponentInfo{com.sinovatech.unicom.ui/com.sinovatech.unicom.ui.WelcomeClient}"
         drawable="unicom" />
+
+    <item
+        component="ComponentInfo{com.v2ray.ang/com.v2ray.ang.ui.MainActivity}"
+        drawable="v2rayng" />
 
     <item
         component="ComponentInfo{com.superevilmegacorp.game/com.superevilmegacorp.game.NuoActivityLauncher}"
