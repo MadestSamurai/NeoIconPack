@@ -642,6 +642,9 @@
     <item
         component="ComponentInfo{com.zui.calculator/com.zui.calculator.Calculator}"
         drawable="calculator" />
+    <item
+        component="ComponentInfo{com.coloros.calculator/com.android.calculator2.Calculator}"
+        drawable="calculator" />
 
     <item
         component="ComponentInfo{com.google.android.calendar/com.android.calendar.AllInOneActivity}"
@@ -856,6 +859,10 @@
         drawable="chushou_tv" />
 
     <item
+        component="ComponentInfo{com.ct.client/com.ct.client.activity.SplashActivity}"
+        drawable="ct" />
+
+    <item
         component="ComponentInfo{com.github.kr328.clash.foss/com.github.kr328.clash.MainActivity}"
         drawable="clash" />
 
@@ -950,6 +957,10 @@
         drawable="clock" />
 
     <item
+        component="ComponentInfo{com.coloros.backuprestore/com.oplus.phoneclone.PhoneCloneMainActivity}"
+        drawable="clone_phone" />
+
+    <item
         component="ComponentInfo{cmb.pb/cmb.pb.ui.PBInitActivity}"
         drawable="cmb_bank" />
 
@@ -993,6 +1004,9 @@
         drawable="compass" />
     <item
         component="ComponentInfo{com.zui.compass/com.zui.compass.CompassActivity}"
+        drawable="compass" />
+    <item
+        component="ComponentInfo{com.coloros.compass2/com.coloros.compass.flat.FlatCompass}"
         drawable="compass" />
 
     <item
@@ -4246,6 +4260,9 @@
 
     <item
         component="ComponentInfo{org.telegram.messenger/org.telegram.ui.LaunchActivity}"
+        drawable="telegram" />
+    <item
+        component="ComponentInfo{org.telegram.messenger/org.telegram.messenger.DefaultIcon}"
         drawable="telegram" />
 
     <item

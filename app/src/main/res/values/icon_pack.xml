@@ -85,6 +85,11 @@
         <item>v2rayng</item>
         <item>kfc</item>
         <item>mcdonald</item>
+        <item>dmzj</item>
+        <item>calculator</item>
+        <item>ct</item>
+        <item>compass</item>
+        <item>clone_phone</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -155,6 +160,11 @@
         <item>v2rayNG</item>
         <item>KFC</item>
         <item>McDonald\'s</item>
+        <item>DMZJ</item>
+        <item>Calculator</item>
+        <item>China Telecom</item>
+        <item>Compass</item>
+        <item>Clone Phone</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
