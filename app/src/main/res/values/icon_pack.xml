@@ -126,6 +126,7 @@
         <item>calendar_d30</item>
         <item>calendar_d31</item>
         <item>calendar</item>
+        <item>deepl</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -237,6 +238,7 @@
         <item>Calendar 30</item>
         <item>Calendar 31</item>
         <item>Calendar</item>
+        <item>DeepL</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->

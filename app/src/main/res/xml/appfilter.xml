@@ -1050,6 +1050,10 @@
         drawable="db_legend" />
 
     <item
+        component="ComponentInfo{com.deepl.mobiletranslator/com.deepl.mobiletranslator.MainActivity}"
+        drawable="deepl" />
+
+    <item
         component="ComponentInfo{com.dianping.v1/com.dianping.main.guide.SplashScreenActivity}"
         drawable="dianping" />
     <item
