@@ -86,6 +86,9 @@
     <calendar
         component="ComponentInfo{com.lenovo.calendar/com.lenovo.calendar.splashpic.SplashActivity}"
         prefix="calendar_d" />
+    <calendar
+        component="ComponentInfo{com.coloros.calendar/com.android.calendar.AllInOneActivity}"
+        prefix="calendar_d" />
 
     <item
         component="ComponentInfo{com.android.bankabc/com.android.bankabc.MainActivity}"
@@ -724,6 +727,9 @@
     <item
         component="ComponentInfo{com.blackberry.calendar/com.blackberry.calendar.AllInOneActivity}"
         drawable="calendar" />
+    <item
+        component="ComponentInfo{com.coloros.calendar/com.android.calendar.AllInOneActivity}"
+        drawable="calendar" />
 
     <item
         component="ComponentInfo{com.intsig.camscanner/com.intsig.camscanner.WelcomeActivity}"
@@ -955,6 +961,9 @@
     <item
         component="ComponentInfo{com.zui.deskclock/com.zui.deskclock.DeskClock}"
         drawable="clock" />
+    <item
+        component="ComponentInfo{com.coloros.alarmclock/com.oplus.alarmclock.AlarmClock}"
+        drawable="clock" />
 
     <item
         component="ComponentInfo{com.coloros.backuprestore/com.oplus.phoneclone.PhoneCloneMainActivity}"
@@ -1010,6 +1019,10 @@
         drawable="compass" />
 
     <item
+        component="ComponentInfo{com.coinglass.android/com.coinglass.androidapp.SplashActivity}"
+        drawable="coinglass" />
+
+    <item
         component="ComponentInfo{com.by_syk.cooldp/com.by_syk.cooldp.HelloActivity}"
         drawable="cooldp" />
 
@@ -1031,6 +1044,10 @@
     <item
         component="ComponentInfo{com.clover.daysmatter/com.clover.daysmatter.ui.activity.MainActivity}"
         drawable="days_matter" />
+
+    <item
+        component="ComponentInfo{com.bandainamcoent.dblegends_ww/jp.co.dimps.trad.common.TRADMainActivity}"
+        drawable="db_legend" />
 
     <item
         component="ComponentInfo{com.dianping.v1/com.dianping.main.guide.SplashScreenActivity}"
@@ -4533,6 +4550,10 @@
     <item
         component="ComponentInfo{com.vipercn.viper4android_v2_fx/com.vipercn.viper4android_v2_fx.activity.ViPER4Android}"
         drawable="viper" />
+
+    <item
+        component="ComponentInfo{com.nightmare.code/com.nightmare.code.MainActivity}"
+        drawable="vscode" />
 
     <item
         component="ComponentInfo{com.mipay.wallet/com.mipay.wallet.ui.MipayEntryActivity}"

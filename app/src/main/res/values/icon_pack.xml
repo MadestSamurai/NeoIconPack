@@ -90,6 +90,42 @@
         <item>ct</item>
         <item>compass</item>
         <item>clone_phone</item>
+        <item>vscode</item>
+        <item>coinglass</item>
+        <item>clock</item>
+        <item>db_legend</item>
+        <item>calendar_d1</item>
+        <item>calendar_d2</item>
+        <item>calendar_d3</item>
+        <item>calendar_d4</item>
+        <item>calendar_d5</item>
+        <item>calendar_d6</item>
+        <item>calendar_d7</item>
+        <item>calendar_d8</item>
+        <item>calendar_d9</item>
+        <item>calendar_d10</item>
+        <item>calendar_d11</item>
+        <item>calendar_d12</item>
+        <item>calendar_d13</item>
+        <item>calendar_d14</item>
+        <item>calendar_d15</item>
+        <item>calendar_d16</item>
+        <item>calendar_d17</item>
+        <item>calendar_d18</item>
+        <item>calendar_d19</item>
+        <item>calendar_d20</item>
+        <item>calendar_d21</item>
+        <item>calendar_d22</item>
+        <item>calendar_d23</item>
+        <item>calendar_d24</item>
+        <item>calendar_d25</item>
+        <item>calendar_d26</item>
+        <item>calendar_d27</item>
+        <item>calendar_d28</item>
+        <item>calendar_d29</item>
+        <item>calendar_d30</item>
+        <item>calendar_d31</item>
+        <item>calendar</item>
     </string-array>
 
     <!-- Corresponding app name list of all icons in /res/drawable-nodpi/ -->
@@ -165,6 +201,42 @@
         <item>China Telecom</item>
         <item>Compass</item>
         <item>Clone Phone</item>
+        <item>VS Code</item>
+        <item>CoinGlass</item>
+        <item>Clock</item>
+        <item>DB LEGENDS</item>
+        <item>Calendar 1</item>
+        <item>Calendar 2</item>
+        <item>Calendar 3</item>
+        <item>Calendar 4</item>
+        <item>Calendar 5</item>
+        <item>Calendar 6</item>
+        <item>Calendar 7</item>
+        <item>Calendar 8</item>
+        <item>Calendar 9</item>
+        <item>Calendar 10</item>
+        <item>Calendar 11</item>
+        <item>Calendar 12</item>
+        <item>Calendar 13</item>
+        <item>Calendar 14</item>
+        <item>Calendar 15</item>
+        <item>Calendar 16</item>
+        <item>Calendar 17</item>
+        <item>Calendar 18</item>
+        <item>Calendar 19</item>
+        <item>Calendar 20</item>
+        <item>Calendar 21</item>
+        <item>Calendar 22</item>
+        <item>Calendar 23</item>
+        <item>Calendar 24</item>
+        <item>Calendar 25</item>
+        <item>Calendar 26</item>
+        <item>Calendar 27</item>
+        <item>Calendar 28</item>
+        <item>Calendar 29</item>
+        <item>Calendar 30</item>
+        <item>Calendar 31</item>
+        <item>Calendar</item>
     </string-array>
 
     <!-- Latest icons (Make sure it's from the "icons" array) -->
